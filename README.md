@@ -1,4 +1,4 @@
-# OOP_NO2_T3_2_2025_Group
+# OOP_NO2_T3_2_2025_GroupA
 
 Nhóm làm việc 
 # Thành Viên
