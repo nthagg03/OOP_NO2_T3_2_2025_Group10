@@ -39,6 +39,9 @@ Nguyễn Xuân Thắng
 
 ### Phiếu nhập hàng:
 - ID phiếu nhập
+- số lượng sản phẩm
+- tên sản phẩm
+- giá nhập
 - Ngày nhập
 - Nhân viên thực hiện
 - Tổng giá trị nhập
