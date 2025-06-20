@@ -43,6 +43,7 @@ Nguyễn Xuân Thắng
 - Nhân viên thực hiện
 - Tổng giá trị nhập
 
+
 ### Kho hàng:
 - ID sản phẩm
 - Số lượng hiện tại
