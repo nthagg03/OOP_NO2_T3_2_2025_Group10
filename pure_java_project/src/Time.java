@@ -1,27 +1,38 @@
 public class Time {
-    private int hour, minute, second;
-
-    public Time() { this(0, 0, 0); }
-    public Time(int hour, int minute, int second) {
-        this.hour = hour; this.minute = minute; this.second = second;
-    }
-
-    public int getHour() { return hour; }
-    public void setHour(int hour) { this.hour = hour; }
-    public int getMinute() { return minute; }
-    public void setMinute(int minute) { this.minute = minute; }
-    public int getSecond() { return second; }
-    public void setSecond(int second) { this.second = second; }
-
-    public int toSeconds() { return hour * 3600 + minute * 60 + second; }
+    int hour, minute, second;
     
-    public void addSeconds(int sec) {
-        int total = toSeconds() + sec;
-        hour = total / 3600;
-        minute = (total % 3600) / 60;
-        second = total % 60;
+    Time() { setTime(0, 0, 0); }
+    Time(int h) { setTime(h, 0, 0); }
+    Time(int h, int m) { setTime(h, m, 0); }
+    Time(int h, int m, int s) { setTime(h, m, s); }
+
+    Time setTime(int h, int m, int s) {
+    setHour(h);
+    setMinute(m);
+    setSecond(s);
+    return this;
     }
 
-    @Override
-    public String toString() { return String.format("%02d:%02d:%02d", hour, minute, second); }
+    Time setHour(int h) {
+    hour = (( h >= 0 && h < 24 ) ? h : 0 );
+    return this;
+    }
+    Time setMinute(int m) {
+        minute = (( m >= 0 && m < 60 ) ? m : 0 );
+        return this;
+    }
+    Time setSecond(int s) {
+        second = ((s >= 0 && s < 60 ) ? s : 0 );
+        return this;
+    }
+
+    int getHour() { return hour; }
+    int getMinute() { return minute; }
+    int getSecond() { return second; }
+    public String toString() {
+        return ((hour == 12 || hour == 0) ? 12 : hour % 12) +
+               ":" + (minute < 10 ? "0" : "") + minute +
+               ":" + (second < 10 ? "0" : "") + second +
+               (hour < 12 ? " AM" : " PM");
+    }
 }

@@ -1,6 +1,7 @@
 public class TestRecursion {
     public static void test() {
-        System.out.println("5! = " + Recursion.factorial(5));
-        System.out.println("Fibonacci(7) = " + Recursion.fibonacci(7));
+        Recursion recursion = new Recursion();
+        long number = 5;
+        System.out.println("5! = " + recursion.factorial(number));
     }
 }
