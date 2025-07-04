@@ -1,7 +1,11 @@
 {
     "java.project.sourcePaths": [
         "banHang/test",
-        "banHang/src"
+        "banHang/src",
+        "banHang/Review",
+        "pure_java_project/Test",
+        "pure_java_project/src",
+        "pure_java_project/Review"
     ],
     "java.project.referencedLibraries": []
 }
