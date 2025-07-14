@@ -1,11 +1,10 @@
 {
     "java.project.sourcePaths": [
-        "banHang/test",
         "banHang/src",
-        "banHang/Review",
-        "pure_java_project/Test",
-        "pure_java_project/src",
-        "pure_java_project/Review"
+        "banHang/test",
+        "banHang/Review"
     ],
-    "java.project.referencedLibraries": []
+    "java.project.outputPath": "banHang/bin",
+    "java.project.referencedLibraries": [],
+    "java.compile.nullAnalysis.mode": "automatic"
 }

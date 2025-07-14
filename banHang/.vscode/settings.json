@@ -1,5 +1,6 @@
 {
     "java.project.sourcePaths": ["src", "test", "Review"],
     "java.project.outputPath": "bin",
-    "java.compile.nullAnalysis.mode": "automatic"  
+    "java.compile.nullAnalysis.mode": "automatic",
+    "java.configuration.updateBuildConfiguration": "automatic"
 }
