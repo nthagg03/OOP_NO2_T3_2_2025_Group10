@@ -1,0 +1,14 @@
+{
+    "folders": [
+        {
+            "name": "Pure Java Project",
+            "path": "./pure_java_project"
+        }
+    ],
+    "settings": {
+        "java.project.sourcePaths": ["src", "test"],
+        "java.project.outputPath": "bin",
+        "java.compile.nullAnalysis.mode": "automatic",
+        "java.project.referencedLibraries": ["lib/**/*.jar"]
+    }
+}
