@@ -1,12 +1,19 @@
-# OOP_NO2_T3_2_2025_GroupA
+## OOP_NO2_T3_2_2025_GroupA
+**Vũ Văn Phương**  
+**MSV**
 
-Nhóm làm việc 
-# Thành Viên
-Vũ Văn Phương
+**Nguyễn Xuân Thắng**  
+**MSV:** 24100529
 
-Nguyễn Xuân Thắng
+## OOP Project - Sales Management System
+**Sales Management System** là một ứng dụng quản lý bán hàng được phát triển bằng Java.  
+Ứng dụng hỗ trợ quản lý sản phẩm, giỏ hàng, đơn hàng và các tính năng liên quan đến việc bán hàng.  
+Dự án được thiết kế với giao diện dòng lệnh (Console-based UI) đơn giản và dễ sử dụng.
 
-# Ứng dụng: Xây dựng quản lý bán hàng
+---
+### Giới thiệu
+
+---
 ## Phân tích đối tượng
 ### Người dùng:
 - ID người dùng
