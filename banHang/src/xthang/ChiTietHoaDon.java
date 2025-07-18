@@ -1,3 +1,4 @@
+package xthang;
 
 
 public class ChiTietHoaDon {

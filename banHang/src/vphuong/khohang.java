@@ -1,3 +1,4 @@
+package vphuong;
 public class khohang {
     
     // biến thành viên
