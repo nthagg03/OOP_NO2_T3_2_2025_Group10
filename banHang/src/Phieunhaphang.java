@@ -1,5 +1,4 @@
-package vphuong;
-public class Phieunhaphang {
+class Phieunhaphang {
     
     String phieuNhapID;
     String ngayNhap;
@@ -9,7 +8,6 @@ public class Phieunhaphang {
     String giaNhap;
     String tongGiatrinhap;
     
-}
     public PhieuNhapHang(String maPhieuNhap, String ngayNhap, String nhanVienNhap, int soLuongSanPham, String tenSanPham, double giaNhap) {
         this.maPhieuNhap = maPhieuNhap;
         this.ngayNhap = ngayNhap;

@@ -1,5 +1,3 @@
-package vphuong;
-
 class SanPham {
     String maSanPham;
     String tenSanPham;

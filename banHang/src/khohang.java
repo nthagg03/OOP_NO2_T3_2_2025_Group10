@@ -1,11 +1,7 @@
-package vphuong;
-public class khohang {
-    
-    // biến thành viên
+class khohang {
     String IDSanPham;
     String SoLuongHienTai;
     String NgayCapNhatCuoi;
-}
 
     public KhoHang(String maSanPham, int soLuongHienTai, String ngayCapNhatCuoi) {
         this.maSanPham = maSanPham;
