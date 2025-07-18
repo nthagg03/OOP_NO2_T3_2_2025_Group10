@@ -1,13 +1,20 @@
 package vphuong;
 
-public class Sanpham {
-
-    String sanPhamID;
+class SanPham {
+    String maSanPham;
     String tenSanPham;
-    String giaBan;
-    String giaNhap;
-    String soluongTonKho;
-    String danhMucSanPham;
+    double giaBan;    
+    double giaNhap;
+    int soLuongTonKho;
+    String maDanhMuc;
 
-    
+    public SanPham(String maSanPham, String tenSanPham, double giaBan, double giaNhap, int soLuongTonKho, String maDanhMuc) {
+        this.maSanPham = maSanPham;
+        this.tenSanPham = tenSanPham;
+        this.giaBan = giaBan;
+        this.giaNhap = giaNhap;
+        this.soLuongTonKho = soLuongTonKho;
+        this.maDanhMuc = maDanhMuc;
+    }
 }
+
