@@ -1,7 +1,7 @@
 public class App {
     public static void main(String[] args) throws Exception {
-
-        //testBook.test();
-        //testDH.test();
+        testDH.test();
+        testHoaDon.test();
+        
     }
 }

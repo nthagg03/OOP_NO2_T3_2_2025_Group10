@@ -1,25 +1,31 @@
 public class testDH {
     public static void test() {
-        // Create a new order
-        String orderId = "DH001";
-        String customerName = "Phone Luong";
-        String product = "Laptop";
-        int quantity = 2;
-        double price = 1500.00;
 
-        // Simulate creating an order
-        System.out.println("Creating order: " + orderId);
-        System.out.println("Customer: " + customerName);
-        System.out.println("Product: " + product);
-        System.out.println("Quantity: " + quantity);
-        System.out.println("Price: $" + price);
+        DonHang dh1 = new DonHang("DH001", "SP001", 2, 500000, 50000, "Dang xu ly", "Tien mat");
 
-        // Test case 2: Update an existing order
-        quantity = 3; // Update quantity
-        System.out.println("Updating order: " + orderId);
-        System.out.println("New Quantity: " + quantity);
+        DonHang dh2 = new DonHang("DH002", "SP002", 1, 1000000, 0, "Da giao", "Chuyen khoan");
 
-        // Test case 3: Cancel an order
-        System.out.println("Cancelling order: " + orderId);
+        DonHang.themDonHang(dh2);
+        DonHang.themDonHang(dh1);
+
+        System.out.println("==================danh sach don hang: ===========================");
+
+        readDonHang();
+    }
+
+    public static void readDonHang() {
+        System.out.println("+----------+-------------+------------+---------------+");
+        System.out.println("| Ma DH    | Ma SP       | So Luong   | Don Gia       |");
+        System.out.println("+----------+-------------+------------+---------------+");
+
+        for (DonHang donHang : DonHang.layTatCaDonHang()) {
+            System.out.printf("| %-8s | %-11s | %-10d | %13.0f |\n",
+                    donHang.getIdDonHang(),
+                    donHang.getIdSanPham(),
+                    donHang.getSoLuong(),
+                    donHang.getDonGia());
+        }
+
+        System.out.println("+----------+-------------+------------+---------------+");
     }
 }
