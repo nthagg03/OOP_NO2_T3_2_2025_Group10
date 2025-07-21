@@ -20,31 +20,57 @@ Hệ thống được thiết kế để giải quyết các bài toán cơ bả
 - [Thành viên nhóm](#-thành-viên-nhóm)
 - [Tính năng chính](#-tính-năng-chính)
 - [Phân tích và Thiết kế](#-phân-tích-và-thiết-kế)
-  
 
 
 ---
 
 ## 👥 Thành viên nhóm
 
-| STT | Họ tên           |     Mã sinh viên  |            GitHub                                    |
-|-----|------------------|-------------------|------------------------------------------------------|
-| 1   | Nguyễn Xuân Thắng|   24100529        | [nthagg03](https://github.com/nthagg03)              |
-| 2   | Vũ Văn Phương    |   24100373        | [mphw0312](https://github.com/mphw0312)              |
-| 3   | Nguyễn Lệ Thu    |                   | [nglthu](https://github.com/nglthu)                  |
+| STT | Họ tên           | Mã sinh viên | GitHub                                             | Vai trò        |
+|-----|------------------|-------------|----------------------------------------------------|----------------|
+| 1   | Nguyễn Xuân Thắng| 24100529    | [nthagg03](https://github.com/nthagg03)           | Team Leader    |
+| 2   | Vũ Văn Phương    | 24100373    | [mphw0312](https://github.com/mphw0312)           | Developer      |
+| 3   | TS. Nguyễn Lệ Thu|             | [nglthu](https://github.com/nglthu)               | Giảng viên     |
 
 ---
 
 ## ✨ Tính năng chính
 
--   ✅ **Quản lý Sản phẩm:** Thêm, xóa, sửa, và tìm kiếm sản phẩm.
--   ✅ **Quản lý Đơn hàng:** Tạo đơn hàng, xử lý thanh toán và cập nhật trạng thái.
--   ✅ **Quản lý Kho hàng:** Theo dõi tồn kho và tạo phiếu nhập hàng.
--   ✅ **Quản lý Người dùng:** Phân quyền người dùng (quản trị viên, nhân viên).
--   ✅ **Thanh toán:** Hỗ trợ nhiều hình thức thanh toán.
--   📊 **Thống kê & Báo cáo:** (Gợi ý) Xem báo cáo doanh thu, sản phẩm bán chạy.
+### 👤 **Quản lý người dùng:**
+-  **Thêm / Sửa / Xóa người dùng**
+-  **Lọc theo loại:** Khách hàng (Customer), Nhà cung cấp (Seller)
+-  **Phân quyền:** Admin, Manager, Staff
+-  **Hiển thị danh sách người dùng theo vai trò**
+
+### 📦 **Quản lý sản phẩm:**
+-  **Thêm / Sửa / Xóa sản phẩm**
+-  **Gán sản phẩm cho nhà cung cấp**
+-  **Cập nhật số lượng sản phẩm sau mỗi đơn hàng**
+-  **Tìm kiếm sản phẩm theo tên, mã, danh mục**
+-  **Quản lý giá nhập, giá bán**
+
+### 🛒 **Quản lý đơn hàng:**
+-  **Tạo / Cập nhật đơn hàng**
+-  **Hiển thị danh sách đơn hàng**
+-  **Gán đơn hàng cho khách hàng và thanh toán**
+-  **Tính tổng tiền đơn hàng (bao gồm thuế, giảm giá)**
+-  **Theo dõi trạng thái đơn hàng**
+
+### 💳 **Quản lý thanh toán:**
+-  **Tạo và cập nhật thanh toán**
+-  **Hiển thị thông tin thanh toán chi tiết**
+-  **Cập nhật trạng thái, phương thức thanh toán**
+-  **Hỗ trợ nhiều hình thức:** Tiền mặt, Chuyển khoản, QR Code
+-  **Tạo hóa đơn điện tử**
+
+### 💾 **Lưu trữ dữ liệu:**
+-  **Dữ liệu được lưu vào file nhị phân**
+-  **Sử dụng `ObjectOutputStream`, `ObjectInputStream`**
+-  **Áp dụng `ArrayList`, `Map`, `HashMap` để quản lý dữ liệu trong bộ nhớ**
+-  **Backup và restore dữ liệu tự động**
 
 ---
+
 ## 🏗️ Phân tích và Thiết kế
 
 Dưới đây là cấu trúc các đối tượng chính trong hệ thống:
