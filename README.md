@@ -20,6 +20,7 @@ Hệ thống được thiết kế để giải quyết các bài toán cơ bả
 - [Thành viên nhóm](#-thành-viên-nhóm)
 - [Tính năng chính](#-tính-năng-chính)
 - [Phân tích và Thiết kế](#-phân-tích-và-thiết-kế)
+  
 
 
 ---
@@ -49,78 +50,123 @@ Hệ thống được thiết kế để giải quyết các bài toán cơ bả
 Dưới đây là cấu trúc các đối tượng chính trong hệ thống:
 
 <details>
-<summary><strong>1. Người dùng (User)</strong></summary>
+<summary><strong>👤 Người dùng (User)</strong></summary>
 
+**Thuộc tính:**
 - `userId`: ID người dùng (Khóa chính)
 - `username`: Tên đăng nhập
 - `password`: Mật khẩu (đã được mã hóa)
 - `fullName`: Họ và tên
-- `role`: Vai trò (ví dụ: `ADMIN`, `STAFF`)
+- `email`: Email liên hệ
+- `phoneNumber`: Số điện thoại
+- `role`: Vai trò (`ADMIN`, `MANAGER`, `STAFF`)
+- `isActive`: Trạng thái hoạt động
+- `createdDate`: Ngày tạo tài khoản
+
+**Phương thức:**
+- `login()`: Đăng nhập vào hệ thống
+- `logout()`: Đăng xuất khỏi hệ thống
+- `updateProfile()`: Cập nhật thông tin cá nhân
+- `changePassword()`: Thay đổi mật khẩu
 
 </details>
 
 <details>
-<summary><strong>2. Sản phẩm (Product)</strong></summary>
+<summary><strong>📦 Sản phẩm (Product)</strong></summary>
 
+**Thuộc tính:**
 - `productId`: ID sản phẩm (Khóa chính)
 - `productName`: Tên sản phẩm
+- `description`: Mô tả sản phẩm
 - `importPrice`: Giá nhập
 - `salePrice`: Giá bán
 - `stockQuantity`: Số lượng tồn kho
-- `categoryId`: ID danh mục (Khóa ngoại)
+- `categoryId`: ID danh mục sản phẩm
+- `barcode`: Mã vạch sản phẩm
+- `unit`: Đơn vị tính (cái, kg, lít...)
+- `createdDate`: Ngày tạo sản phẩm
+- `isActive`: Trạng thái hoạt động
+
+**Phương thức:**
+- `addProduct()`: Thêm sản phẩm mới
+- `updateProduct()`: Cập nhật thông tin sản phẩm
+- `deleteProduct()`: Xóa sản phẩm
+- `searchProduct()`: Tìm kiếm sản phẩm
+- `checkStock()`: Kiểm tra tồn kho
 
 </details>
 
 <details>
-<summary><strong>3. Danh mục sản phẩm (Category)</strong></summary>
+<summary><strong>🛒 Đơn hàng (Order)</strong></summary>
 
-- `categoryId`: ID danh mục (Khóa chính)
-- `categoryName`: Tên danh mục
-
-</details>
-
-<details>
-<summary><strong>4. Đơn hàng (Order)</strong></summary>
-
+**Thuộc tính:**
 - `orderId`: ID đơn hàng (Khóa chính)
+- `customerId`: ID khách hàng
+- `staffId`: ID nhân viên tạo đơn
 - `orderDate`: Ngày tạo đơn hàng
-- `totalAmount`: Tổng tiền
-- `paymentMethod`: Hình thức thanh toán (`CASH`, `TRANSFER`, `QR_CODE`)
-- `status`: Trạng thái (`PENDING`, `PAID`, `CANCELLED`, `RETURNED`)
+- `totalAmount`: Tổng tiền trước thuế
+- `taxAmount`: Tiền thuế
+- `discountAmount`: Tiền giảm giá
+- `finalAmount`: Tổng tiền cuối cùng
+- `status`: Trạng thái (`PENDING`, `CONFIRMED`, `CANCELLED`, `COMPLETED`)
+- `orderItems`: Danh sách sản phẩm trong đơn hàng
+
+**Phương thức:**
+- `createOrder()`: Tạo đơn hàng mới
+- `addItem()`: Thêm sản phẩm vào đơn hàng
+- `removeItem()`: Xóa sản phẩm khỏi đơn hàng
+- `updateQuantity()`: Cập nhật số lượng sản phẩm
+- `calculateTotal()`: Tính tổng tiền đơn hàng
+- `cancelOrder()`: Hủy đơn hàng
 
 </details>
 
 <details>
-<summary><strong>5. Chi tiết Đơn hàng (OrderDetail)</strong></summary>
+<summary><strong>💳 Thanh toán (Payment)</strong></summary>
 
-- `orderDetailId`: ID chi tiết đơn hàng (Khóa chính)
+**Thuộc tính:**
+- `paymentId`: ID thanh toán (Khóa chính)
 - `orderId`: ID đơn hàng (Khóa ngoại)
-- `productId`: ID sản phẩm (Khóa ngoại)
-- `quantity`: Số lượng
-- `unitPrice`: Đơn giá tại thời điểm bán
-- `discount`: Giảm giá (nếu có)
+- `paymentMethod`: Phương thức thanh toán (`CASH`, `BANK_TRANSFER`, `QR_CODE`, `CREDIT_CARD`)
+- `amount`: Số tiền thanh toán
+- `paidAmount`: Số tiền đã trả
+- `changeAmount`: Tiền thừa trả lại
+- `paymentDate`: Ngày thanh toán
+- `status`: Trạng thái (`PENDING`, `COMPLETED`, `FAILED`, `REFUNDED`)
+- `transactionId`: Mã giao dịch (nếu có)
+- `note`: Ghi chú thanh toán
+
+**Phương thức:**
+- `processPayment()`: Xử lý thanh toán
+- `refundPayment()`: Hoàn tiền
+- `validatePayment()`: Xác thực thanh toán
+- `generateReceipt()`: Tạo hóa đơn thanh toán
 
 </details>
 
 <details>
-<summary><strong>6. Phiếu nhập hàng (GoodsReceipt)</strong></summary>
+<summary><strong>📊 Kho hàng (Inventory)</strong></summary>
 
-- `receiptId`: ID phiếu nhập (Khóa chính)
-- `receiptDate`: Ngày nhập
-- `staffId`: ID nhân viên thực hiện (Khóa ngoại)
-- `totalValue`: Tổng giá trị nhập
-
-</details>
-
-<details>
-<summary><strong>7. Chi tiết Phiếu nhập (ReceiptDetail)</strong></summary>
-
-- `receiptDetailId`: ID chi tiết phiếu nhập (Khóa chính)
-- `receiptId`: ID phiếu nhập (Khóa ngoại)
+**Thuộc tính:**
+- `inventoryId`: ID kho hàng (Khóa chính)
 - `productId`: ID sản phẩm (Khóa ngoại)
-- `quantity`: Số lượng
-- `importPrice`: Giá nhập tại thời điểm nhập
+- `currentStock`: Số lượng hiện tại
+- `minStock`: Số lượng tối thiểu
+- `maxStock`: Số lượng tối đa
+- `lastUpdated`: Ngày cập nhật cuối
+- `location`: Vị trí trong kho
+- `supplierId`: ID nhà cung cấp
+- `costPrice`: Giá vốn trung bình
+
+**Phương thức:**
+- `updateStock()`: Cập nhật số lượng tồn kho
+- `checkLowStock()`: Kiểm tra hàng sắp hết
+- `generateStockReport()`: Tạo báo cáo tồn kho
+- `importGoods()`: Nhập hàng vào kho
+- `exportGoods()`: Xuất hàng từ kho
+- `stockTaking()`: Kiểm kê hàng hóa
 
 </details>
 
 ---
+
