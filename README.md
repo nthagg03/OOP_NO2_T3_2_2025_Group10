@@ -196,3 +196,26 @@ Dưới đây là cấu trúc các đối tượng chính trong hệ thống:
 
 ---
 
+## 📊 Biểu đồ lớp (Class Diagram)
+
+---
+
+## 🔁 Biểu đồ hoạt động (Activity Diagram)
+
+### 1. Đăng nhập
+
+> nhét ảnh vào
+
+### 2. Mua hàng
+
+> nhét ảnh vào
+
+### 3. Thanh toán
+
+> nhét ảnh vào
+
+### 4. Tìm kiếm danh sách đơn hàng đã thanh toán của khách hàng cụ thể 
+
+> nhét ảnh vào
+
+---
