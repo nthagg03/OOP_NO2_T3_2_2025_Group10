@@ -196,7 +196,7 @@ Dưới đây là cấu trúc các đối tượng chính trong hệ thống:
 ---
 
 ## 📊 Biểu đồ lớp (Class Diagram)
-![Class Diagram]()
+![Class Diagram](Image/classdiagram.png)
 ---
 
 ## 🔁 Biểu đồ hoạt động (Activity Diagram)
