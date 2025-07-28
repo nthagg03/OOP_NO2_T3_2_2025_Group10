@@ -153,19 +153,18 @@ Dưới đây là cấu trúc các đối tượng chính trong hệ thống:
 **Thuộc tính:**
 - `paymentId`: ID thanh toán (Khóa chính)
 - `orderId`: ID đơn hàng (Khóa ngoại)
-- `paymentMethod`: Phương thức thanh toán (`CASH`, `BANK_TRANSFER`, `QR_CODE`, `CREDIT_CARD`)
+- `paymentMethod`: Phương thức thanh toán (`CASH`, `E-WALLET`, `CREDIT_CARD`)
 - `amount`: Số tiền thanh toán
 - `paidAmount`: Số tiền đã trả
 - `changeAmount`: Tiền thừa trả lại
 - `paymentDate`: Ngày thanh toán
 - `status`: Trạng thái (`PENDING`, `COMPLETED`, `FAILED`, `REFUNDED`)
-- `transactionId`: Mã giao dịch (nếu có)
-- `note`: Ghi chú thanh toán
+- `transactionId`: Mã giao dịch
 
 **Phương thức:**
 - `processPayment()`: Xử lý thanh toán
 - `refundPayment()`: Hoàn tiền
-- `validatePayment()`: Xác thực thanh toán
+- `validdatePayment()`: Xác thực thanh toán
 - `generateReceipt()`: Tạo hóa đơn thanh toán
 
 </details>
@@ -197,7 +196,7 @@ Dưới đây là cấu trúc các đối tượng chính trong hệ thống:
 ---
 
 ## 📊 Biểu đồ lớp (Class Diagram)
-![Class Diagram](Image/classdiagram.png)
+![Class Diagram]()
 ---
 
 ## 🔁 Biểu đồ hoạt động (Activity Diagram)
