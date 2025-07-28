@@ -3,16 +3,19 @@ public class Student implements Comparable {
         this.name = name;
         this.gpa = gpa;
     }
-
-public Student() {}
-public int compareTo(Object o) {
-    if(((Student)o).gpa < gpa) return 1;
-    else if(((Student)o).gpa > gpa) return -1;
-    else return 0;
-}
-public boolean equals(Object o) {
-    if (gpa == ((Student) o).gpa) return true;
-    else return false;
+    public Student() {}
+    //Object is the ancestor of every class
+    public int compareTo(Object o) {
+    //cast the correct type (Student)o
+        if ( ((Student)o).gpa < gpa ) return 1;
+        else if ( ((Student)o).gpa > gpa ) return -1;
+        else return 0;
+    }
+    // Can this equals() be improved and be consistent??
+    public boolean equals(Object o) {
+    //cast the correct type (Student)o
+        if (gpa == ((Student) o).gpa) return true;
+        else return false;
     }
     public String getName() { return name;}
     public float getGpa() { return gpa;}
