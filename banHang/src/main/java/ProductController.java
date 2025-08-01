@@ -1,29 +1,40 @@
 package main.java;
 
 public class ProductController {
-    private ProductService productService;
+    private final ProductService productService;
 
-    public String list(Model model) {
+    public ProductController(ProductService productService) {
+        this.productService = productService;
+    }
+
+    public String listProducts(Model model) {
         model.addAttribute("products", productService.findAll());
         return "product/list";
     }
 
-    public String addForm(Model model) {
+    @GetMapping("/add")
+    public String showAddForm(Model model) {
         model.addAttribute("product", new Product());
-        return "product/form";
+        return "product/form"; // form.html
     }
 
-    public String save(Product product) {
+    @PostMapping("/save")
+    public String saveProduct(@ModelAttribute("product") Product product) {
         productService.save(product);
         return "redirect:/products";
     }
 
-    public String editForm(Long id, Model model) {
-        model.addAttribute("product", productService.findById(id));
-        return "product/form";
+    // Form sửa sản phẩm
+    @GetMapping("/edit/{id}")
+    public String showEditForm(@PathVariable Long id, Model model) {
+        Product product = productService.findById(id);
+        model.addAttribute("product", product);
+        return "product/form"; // dùng lại form.html
     }
 
-    public String delete(Long id) {
+    // Xoá sản phẩm
+    @GetMapping("/delete/{id}")
+    public String deleteProduct(@PathVariable Long id) {
         productService.delete(id);
         return "redirect:/products";
     }
