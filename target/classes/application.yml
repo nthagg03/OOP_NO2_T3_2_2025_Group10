@@ -1,0 +1,75 @@
+# Spring Boot Application Configuration
+spring:
+  application:
+    name: coffee-shop-management
+    
+  # Database Configuration
+  datasource:
+    # H2 Database for development/testing
+    url: jdbc:h2:mem:coffeeshop
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: 
+    
+    # MySQL Cloud Database Configuration (commented for development)
+    # url: jdbc:mysql://your-cloud-mysql-host:port/coffeeshop
+    # username: your-username
+    # password: your-password
+    # driver-class-name: com.mysql.cj.jdbc.Driver
+  
+  # JPA/Hibernate Configuration
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+    format-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+        # dialect: org.hibernate.dialect.MySQLDialect  # For MySQL
+  
+  # H2 Console (for development only)
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+      settings:
+        trace: false
+        web-allow-others: false
+  
+  # Thymeleaf Configuration
+  thymeleaf:
+    cache: false
+    prefix: classpath:/templates/
+    suffix: .html
+    
+  # Web Configuration
+  web:
+    resources:
+      static-locations: classpath:/static/
+
+# Server Configuration
+server:
+  port: 8080
+  servlet:
+    context-path: /
+
+# Logging Configuration
+logging:
+  level:
+    com.phenikaa.coffeeshop: DEBUG
+    org.springframework.web: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+
+# Application Configuration
+coffeeshop:
+  app:
+    version: 1.0.0
+    title: Coffee Shop Management System
+    description: Complete coffee shop management system for Phenikaa University
+  security:
+    cors:
+      allowed-origins: "*"
+      allowed-methods: "*"
+      allowed-headers: "*"

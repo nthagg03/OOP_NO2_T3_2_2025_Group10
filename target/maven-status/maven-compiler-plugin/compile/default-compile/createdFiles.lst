@@ -1,0 +1,12 @@
+com/phenikaa/coffeeshop/model/Order.class
+com/phenikaa/coffeeshop/repository/CustomerRepository.class
+com/phenikaa/coffeeshop/repository/ProductRepository.class
+com/phenikaa/coffeeshop/model/Product.class
+com/phenikaa/coffeeshop/model/OrderItem.class
+com/phenikaa/coffeeshop/model/OrderStatus.class
+com/phenikaa/coffeeshop/repository/OrderRepository.class
+com/phenikaa/coffeeshop/model/Customer.class
+com/phenikaa/coffeeshop/CoffeeShopApplication.class
+com/phenikaa/coffeeshop/model/Employee.class
+com/phenikaa/coffeeshop/repository/EmployeeRepository.class
+com/phenikaa/coffeeshop/repository/OrderItemRepository.class
