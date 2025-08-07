@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${pageTitle} + ' - Sales Management System'">Dashboard - Sales Management System</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <style>
+        .sidebar {
+            min-height: 100vh;
+            background-color: #343a40;
+        }
+        .sidebar .nav-link {
+            color: #adb5bd;
+        }
+        .sidebar .nav-link:hover,
+        .sidebar .nav-link.active {
+            color: #fff;
+            background-color: #495057;
+        }
+        .main-content {
+            margin-left: 0;
+            padding: 20px;
+        }
+        @media (min-width: 768px) {
+            .main-content {
+                margin-left: 250px;
+            }
+        }
+        .card-stat {
+            border-left: 4px solid #007bff;
+        }
+        .card-stat.success {
+            border-left-color: #28a745;
+        }
+        .card-stat.warning {
+            border-left-color: #ffc107;
+        }
+        .card-stat.danger {
+            border-left-color: #dc3545;
+        }
+        .stat-icon {
+            font-size: 2rem;
+            opacity: 0.6;
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <nav class="col-md-3 col-lg-2 d-md-block sidebar collapse">
+        <div class="position-sticky pt-3">
+            <div class="px-3 mb-3">
+                <h5 class="text-white">Sales Management</h5>
+            </div>
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link active" href="/">
+                        🏠 Dashboard
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/products">
+                        📦 Products
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/customers">
+                        👥 Customers
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/orders">
+                        🛒 Orders
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/invoices">
+                        🧾 Invoices
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/inventory">
+                        🏬 Inventory
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Header -->
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+            <h1 class="h2">Dashboard</h1>
+            <div class="btn-toolbar mb-2 mb-md-0">
+                <div class="btn-group me-2">
+                    <button type="button" class="btn btn-sm btn-outline-secondary">Refresh</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Statistics Cards -->
+        <div class="row mb-4">
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card card-stat border-left-primary shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                    Total Products
+                                </div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800" th:text="${totalProducts}">0</div>
+                            </div>
+                            <div class="col-auto">
+                                <div class="stat-icon text-primary">📦</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card card-stat success border-left-success shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                    Total Customers
+                                </div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800" th:text="${totalCustomers}">0</div>
+                            </div>
+                            <div class="col-auto">
+                                <div class="stat-icon text-success">👥</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card card-stat warning border-left-warning shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                    Total Orders
+                                </div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800" th:text="${totalOrders}">0</div>
+                            </div>
+                            <div class="col-auto">
+                                <div class="stat-icon text-warning">🛒</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card card-stat danger border-left-danger shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
+                                    Total Sales
+                                </div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                    $<span th:text="${#numbers.formatDecimal(totalSales, 1, 2)}">0.00</span>
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <div class="stat-icon text-danger">💰</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="card shadow">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Quick Actions</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-3 col-md-6 mb-3">
+                                <a href="/products/new" class="btn btn-primary btn-block">
+                                    📦 Add New Product
+                                </a>
+                            </div>
+                            <div class="col-lg-3 col-md-6 mb-3">
+                                <a href="/customers/new" class="btn btn-success btn-block">
+                                    👤 Add New Customer
+                                </a>
+                            </div>
+                            <div class="col-lg-3 col-md-6 mb-3">
+                                <a href="/orders/new" class="btn btn-info btn-block">
+                                    🛒 Create New Order
+                                </a>
+                            </div>
+                            <div class="col-lg-3 col-md-6 mb-3">
+                                <a href="/products/low-stock" class="btn btn-warning btn-block">
+                                    ⚠️ Low Stock Items
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Activity -->
+        <div class="row">
+            <div class="col-lg-6 mb-4">
+                <div class="card shadow">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Recent Orders</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="text-center">
+                            <p class="text-muted">No recent orders to display</p>
+                            <a href="/orders" class="btn btn-sm btn-outline-primary">View All Orders</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 mb-4">
+                <div class="card shadow">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">System Status</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-2">
+                            <small class="text-muted">Database Connection</small>
+                            <div class="text-success">✅ Connected</div>
+                        </div>
+                        <div class="mb-2">
+                            <small class="text-muted">Application Status</small>
+                            <div class="text-success">✅ Running</div>
+                        </div>
+                        <div class="mb-2">
+                            <small class="text-muted">Last Update</small>
+                            <div class="text-muted" th:text="${#temporals.format(#temporals.createNow(), 'yyyy-MM-dd HH:mm:ss')}">Now</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Bootstrap JS -->
+    <script src="/webjars/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/webjars/jquery/jquery.min.js"></script>
+</body>
+</html>

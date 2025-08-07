@@ -3,8 +3,11 @@ com/banhang/repository/InventoryRepository.class
 com/banhang/repository/OrderRepository.class
 com/banhang/model/dto/OrderItemDTO.class
 com/banhang/repository/InvoiceRepository.class
+com/banhang/service/interfaces/InvoiceService.class
 com/banhang/repository/ProductRepository.class
 com/banhang/model/dto/DashboardDTO.class
+com/banhang/service/interfaces/DashboardService.class
+com/banhang/controller/web/ProductController.class
 com/banhang/model/entity/Inventory.class
 com/banhang/model/entity/PaymentMethod.class
 com/banhang/model/dto/DashboardDTO$TopCustomerDTO.class
@@ -12,9 +15,14 @@ com/banhang/model/entity/OrderItem.class
 com/banhang/model/entity/Invoice.class
 com/banhang/model/dto/DashboardDTO$MonthlySalesDTO.class
 com/banhang/model/dto/CustomerDTO.class
+com/banhang/service/impl/ProductServiceImpl.class
 com/banhang/model/entity/Customer.class
 com/banhang/model/dto/InvoiceDTO.class
+com/banhang/controller/web/DashboardController.class
 com/banhang/repository/CustomerRepository.class
+com/banhang/service/impl/CustomerServiceImpl.class
+com/banhang/service/interfaces/OrderService.class
+com/banhang/service/interfaces/InventoryService.class
 com/banhang/model/dto/OrderDTO.class
 com/banhang/model/entity/OrderStatus.class
 com/banhang/model/dto/InventoryDTO.class
@@ -22,6 +30,8 @@ com/banhang/model/entity/Product.class
 com/banhang/model/dto/DashboardDTO$InventoryAlertDTO.class
 com/banhang/model/entity/Order.class
 com/banhang/repository/OrderItemRepository.class
+com/banhang/service/interfaces/ProductService.class
 com/banhang/model/entity/PaymentStatus.class
+com/banhang/service/interfaces/CustomerService.class
 com/banhang/BanHangApplication.class
 com/banhang/model/dto/ProductDTO.class
