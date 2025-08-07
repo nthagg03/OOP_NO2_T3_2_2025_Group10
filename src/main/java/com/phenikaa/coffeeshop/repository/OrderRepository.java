@@ -53,7 +53,7 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
                                     @Param("endDate") LocalDateTime endDate);
     
     // Calculate total revenue for today
-    @Query("SELECT COALESCE(SUM(o.totalAmount), 0) FROM Order o WHERE o.status = 'COMPLETED' AND DATE(o.orderDate) = DATE(:date)")
+    @Query("SELECT COALESCE(SUM(o.totalAmount), 0) FROM Order o WHERE o.status = 'COMPLETED' AND CAST(o.orderDate AS date) = CAST(:date AS date)")
     Double calculateDailyRevenue(@Param("date") LocalDateTime date);
     
     // Count orders by status
@@ -76,6 +76,6 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     List<Order> findStaleOrders(@Param("datetime") LocalDateTime datetime);
     
     // Get monthly revenue report
-    @Query("SELECT YEAR(o.orderDate), MONTH(o.orderDate), SUM(o.totalAmount) FROM Order o WHERE o.status = 'COMPLETED' GROUP BY YEAR(o.orderDate), MONTH(o.orderDate) ORDER BY YEAR(o.orderDate), MONTH(o.orderDate)")
+    @Query("SELECT EXTRACT(YEAR FROM o.orderDate), EXTRACT(MONTH FROM o.orderDate), SUM(o.totalAmount) FROM Order o WHERE o.status = 'COMPLETED' GROUP BY EXTRACT(YEAR FROM o.orderDate), EXTRACT(MONTH FROM o.orderDate) ORDER BY EXTRACT(YEAR FROM o.orderDate), EXTRACT(MONTH FROM o.orderDate)")
     List<Object[]> getMonthlyRevenueReport();
 }
