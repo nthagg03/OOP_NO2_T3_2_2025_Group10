@@ -1,8 +1,8 @@
 {
     "java.project.sourcePaths": [
-        "banHang/src",
-        "banHang/test",
-        "banHang/Review"
+        "Project/banHang/test",
+        "Project/banHang/src",
+        "Project/banHang/Review"
     ],
     "java.project.outputPath": "banHang/bin",
     "java.project.referencedLibraries": [],
