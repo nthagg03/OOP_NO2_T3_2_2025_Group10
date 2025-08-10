@@ -20,6 +20,7 @@ Hệ thống được thiết kế để giải quyết các bài toán cơ bả
 - [Thành viên nhóm](#-thành-viên-nhóm)
 - [Tính năng chính](#-tính-năng-chính)
 - [Phân tích và Thiết kế](#-phân-tích-và-thiết-kế)
+- [UML](#-biểu-đồ-lớp-(Class-Diagram))
 
 
 ---
@@ -60,7 +61,7 @@ Hệ thống được thiết kế để giải quyết các bài toán cơ bả
 -  **Tạo và cập nhật thanh toán**
 -  **Hiển thị thông tin thanh toán chi tiết**
 -  **Cập nhật trạng thái, phương thức thanh toán**
--  **Hỗ trợ nhiều hình thức:** Tiền mặt, Chuyển khoản, QR Code
+-  **Hỗ trợ nhiều hình thức:** Cash, E-wallet, Credit
 -  **Tạo hóa đơn điện tử**
 
 ### 💾 **Lưu trữ dữ liệu:**
@@ -196,24 +197,29 @@ Dưới đây là cấu trúc các đối tượng chính trong hệ thống:
 ---
 
 ## 📊 Biểu đồ lớp (Class Diagram)
-![Class Diagram](Image/classdiagram.png)
+![Class Diagram](Project/Image/classdiagram.png)
+
 ---
 
 ## 🔁 Biểu đồ hoạt động (Activity Diagram)
 
 ### 1. Đăng nhập
 
+![Login Diagram](Project/Image/LoginDiagram.png)
+
+### 2. Mua hàng 
+
+![Buy Activity Diagram](Project/Image/BuyActivityDiagram.png)
+
+### 3. Bán hàng
+
 > nhét ảnh vào
 
-### 2. Mua hàng
+### 4. Thanh toán
 
 > nhét ảnh vào
 
-### 3. Thanh toán
-
-> nhét ảnh vào
-
-### 4. Tìm kiếm danh sách đơn hàng đã thanh toán của khách hàng cụ thể 
+### 5. Tìm kiếm danh sách đơn hàng đã thanh toán của khách hàng cụ thể 
 
 > nhét ảnh vào
 
