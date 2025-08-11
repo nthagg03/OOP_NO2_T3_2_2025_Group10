@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Coffee Shop - Đăng ký</title>
+		<style>
+			:root { --coffee-900:#3e2723; --coffee-700:#5d4037; --coffee-500:#6d4c41; --accent:#c59d5f; --cream:#fff8e1; --red:#e53935; --green:#2e7d32; }
+			*{box-sizing:border-box} body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;color:var(--coffee-900);background:linear-gradient(180deg,#efebe9,#fff 30%); display:grid; place-items:center; min-height:100vh; padding:24px}
+			.wrap{width:100%;max-width:760px;background:#fff;border:1px solid rgba(0,0,0,.06);border-radius:16px;box-shadow:0 12px 30px rgba(62,39,35,.12);overflow:hidden}
+			header.hero{padding:22px 24px;background:linear-gradient(135deg,var(--coffee-700),var(--coffee-900));color:#fff;display:flex;align-items:center;gap:12px}
+			header.hero .logo{width:40px;height:40px;display:grid;place-items:center;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:10px}
+			.content{padding:26px 22px;background:linear-gradient(180deg,#fff,var(--cream))}
+			h2{margin:0 0 10px;font-size:22px}
+			p.desc{margin:0 0 14px;color:#6f5e58;font-size:14px}
+			.grid{display:grid;gap:14px}
+			.field{display:grid;gap:6px}
+			.label{font-size:14px;color:#5c4742}
+			.input,.select{border:1px solid rgba(62,39,35,.18);border-radius:12px;overflow:hidden;background:#fff}
+			input,select{border:0;outline:none;padding:12px 14px;font-size:15px;width:100%;background:transparent}
+			.row{display:flex;justify-content:space-between;gap:12px}
+			.row > .field{flex:1}
+			.alert{padding:12px 14px;border-radius:10px;font-size:14px;border:1px solid}
+			.error{background:#fdecea;border-color:#f5c6c4;color:var(--red)}
+			.success{background:#edf7ed;border-color:#c8e6c9;color:var(--green)}
+			.actions{display:grid;gap:10px;margin-top:6px}
+			.btn{border:0;cursor:pointer;padding:12px 16px;border-radius:12px;font-weight:600;font-size:15px}
+			.btn.primary{background:var(--accent);color:#1d140f;box-shadow:0 6px 16px rgba(197,157,95,.35)}
+			.btn.secondary{background:#fff;color:var(--coffee-900);border:1px solid rgba(62,39,35,.18)}
+			a.link{color:var(--coffee-700);text-decoration:none}
+			a.link:hover{text-decoration:underline}
+		</style>
+	</head>
+	<body>
+		<div class="wrap">
+			<header class="hero">
+				<div class="logo">☕</div>
+				<div>
+					<div style="font-weight:600">Coffee Shop</div>
+					<div style="opacity:.9;font-size:13px">Đăng ký tài khoản để nhận ưu đãi độc quyền</div>
+				</div>
+			</header>
+			<div class="content">
+				<h2>Tạo tài khoản</h2>
+				<p class="desc">Chỉ mất một phút để có ngay tách cà phê đầu ngày.</p>
+
+				<div th:if="${param.error}" class="alert error">Không thể đăng ký. Vui lòng kiểm tra lại thông tin.</div>
+				<div th:if="${param.success}" class="alert success">Đăng ký thành công! Hãy đăng nhập để tiếp tục.</div>
+
+				<form th:action="@{/register}" method="post" class="grid" novalidate>
+					<div class="row">
+						<div class="field">
+							<label class="label" for="fullName">Họ và tên</label>
+							<div class="input"><input id="fullName" name="fullName" type="text" placeholder="Nguyễn Văn A" required /></div>
+						</div>
+						<div class="field">
+							<label class="label" for="username">Tên đăng nhập</label>
+							<div class="input"><input id="username" name="username" type="text" placeholder="minh.nguyen" required /></div>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="field">
+							<label class="label" for="email">Email</label>
+							<div class="input"><input id="email" name="email" type="email" placeholder="ban@coffee.vn" required /></div>
+						</div>
+						<div class="field">
+							<label class="label" for="phone">Số điện thoại</label>
+							<div class="input"><input id="phone" name="phone" type="tel" placeholder="09xx xxx xxx" /></div>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="field">
+							<label class="label" for="password">Mật khẩu</label>
+							<div class="input"><input id="password" name="password" type="password" placeholder="••••••••" required /></div>
+						</div>
+						<div class="field">
+							<label class="label" for="confirmPassword">Xác nhận mật khẩu</label>
+							<div class="input"><input id="confirmPassword" name="confirmPassword" type="password" placeholder="••••••••" required /></div>
+						</div>
+					</div>
+
+					<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+
+					<div class="actions">
+						<button class="btn primary" type="submit">Đăng ký</button>
+						<a class="btn secondary" th:href="@{/login}">Đã có tài khoản? Đăng nhập</a>
+					</div>
+				</form>
+			</div>
+		</div>
+	</body>
+	</html>
+
