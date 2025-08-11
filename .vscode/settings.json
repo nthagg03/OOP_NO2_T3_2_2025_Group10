@@ -4,7 +4,7 @@
         "Project/banHang/src",
         "Project/banHang/Review"
     ],
-    "java.project.outputPath": "banHang/bin",
+    "java.project.outputPath": "Project/banHang/bin",
     "java.project.referencedLibraries": [],
     "java.compile.nullAnalysis.mode": "automatic"
 }
