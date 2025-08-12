@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Order {
     private String orderId;
-    private String customerId;
+    private String customerId; 
     private String productId;
     private int quantity;
     private double totalPrice;

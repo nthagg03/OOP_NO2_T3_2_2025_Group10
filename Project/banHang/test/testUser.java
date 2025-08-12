@@ -41,7 +41,6 @@ public class testUser {
     }
 
     public void testEdit() {
-        System.out.println("\n\n\n== Lecture 4 ==");
 
         ArrayList<User> sl = addList();
         UserList userList = new UserList();
