@@ -1,10 +1,10 @@
-# 🚀 Hệ thống Quản lý Bán hàng
+# 🚀 Hệ thống Quản lý Bán Cafe
 > **Dự án cuối kỳ môn Lập trình Hướng Đối Tượng (OOP)**  
-> Nhóm A – K18 – Term 3 – Năm học 2025  
+> Nhóm 10 – K18 – Term 3 – Năm học 2025  
 > Giảng viên hướng dẫn: TS. Nguyễn Lệ Thu
 
 
-Dự án **Hệ thống Quản lý Bán hàng** được phát triển bằng ngôn ngữ Java, là bài tập lớn cho môn học Lập trình Hướng đối tượng (OOP). Ứng dụng cung cấp các chức năng cơ bản để quản lý sản phẩm, đơn hàng, khách hàng và kho hàng thông qua giao diện dòng lệnh (Console-based UI).
+Dự án **Hệ thống Quản lý Bán Cafe** được phát triển bằng ngôn ngữ Java, là bài tập lớn cho môn học Lập trình Hướng đối tượng (OOP). Ứng dụng cung cấp các chức năng cơ bản để quản lý sản phẩm, đơn hàng, khách hàng và kho hàng thông qua giao diện dòng lệnh (Console-based UI).
 
 ---
 ## 🎯 Giới thiệu
@@ -18,9 +18,13 @@ Hệ thống được thiết kế để giải quyết các bài toán cơ bả
 
 - [Giới thiệu](#-giới-thiệu)
 - [Thành viên nhóm](#-thành-viên-nhóm)
-- [Tính năng chính](#-tính-năng-chính)
 - [Phân tích và Thiết kế](#-phân-tích-và-thiết-kế)
-- [UML](#-biểu-đồ-lớp-(Class-Diagram))
+- [Cấu trúc Thư mục](#-cấu-trúc-thư-mục)
+- [Tính năng chính](#-tính-năng-chính)
+- [UML](#-biểu-đồ-lớp-class-diagram)
+- [Giao diện chương trình (Console)](#-giao-diện-chương-trình-console)
+- [Công nghệ sử dụng](#-công-nghệ-sử-dụng)
+- [Tài liệu tham khảo](#-tài-liệu-tham-khảo)
 
 
 ---
@@ -32,43 +36,6 @@ Hệ thống được thiết kế để giải quyết các bài toán cơ bả
 | 1   | Nguyễn Xuân Thắng| 24100529    | [nthagg03](https://github.com/nthagg03)           | Team Leader    |
 | 2   | Vũ Văn Phương    | 24100373    | [mphw0312](https://github.com/mphw0312)           | Developer      |
 | 3   | TS. Nguyễn Lệ Thu|             | [nglthu](https://github.com/nglthu)               | Giảng viên     |
-
----
-
-## ✨ Tính năng chính
-
-### 👤 **Quản lý người dùng:**
--  **Thêm / Sửa / Xóa người dùng**
--  **Lọc theo loại:** Khách hàng (Customer), Nhà cung cấp (Seller)
--  **Phân quyền:** Admin, Manager, Staff
--  **Hiển thị danh sách người dùng theo vai trò**
-
-### 📦 **Quản lý sản phẩm:**
--  **Thêm / Sửa / Xóa sản phẩm**
--  **Gán sản phẩm cho nhà cung cấp**
--  **Cập nhật số lượng sản phẩm sau mỗi đơn hàng**
--  **Tìm kiếm sản phẩm theo tên, mã, danh mục**
--  **Quản lý giá nhập, giá bán**
-
-### 🛒 **Quản lý đơn hàng:**
--  **Tạo / Cập nhật đơn hàng**
--  **Hiển thị danh sách đơn hàng**
--  **Gán đơn hàng cho khách hàng và thanh toán**
--  **Tính tổng tiền đơn hàng (bao gồm thuế, giảm giá)**
--  **Theo dõi trạng thái đơn hàng**
-
-### 💳 **Quản lý thanh toán:**
--  **Tạo và cập nhật thanh toán**
--  **Hiển thị thông tin thanh toán chi tiết**
--  **Cập nhật trạng thái, phương thức thanh toán**
--  **Hỗ trợ nhiều hình thức:** Cash, E-wallet, Credit
--  **Tạo hóa đơn điện tử**
-
-### 💾 **Lưu trữ dữ liệu:**
--  **Dữ liệu được lưu vào file nhị phân**
--  **Sử dụng `ObjectOutputStream`, `ObjectInputStream`**
--  **Áp dụng `ArrayList`, `Map`, `HashMap` để quản lý dữ liệu trong bộ nhớ**
--  **Backup và restore dữ liệu tự động**
 
 ---
 
@@ -86,7 +53,7 @@ Dưới đây là cấu trúc các đối tượng chính trong hệ thống:
 - `fullName`: Họ và tên
 - `email`: Email liên hệ
 - `phoneNumber`: Số điện thoại
-- `role`: Vai trò (`ADMIN`, `MANAGER`, `STAFF`)
+- `role`: Vai trò (`ADMIN`, `USER`)
 - `isActive`: Trạng thái hoạt động
 - `createdDate`: Ngày tạo tài khoản
 
@@ -105,14 +72,10 @@ Dưới đây là cấu trúc các đối tượng chính trong hệ thống:
 - `productId`: ID sản phẩm (Khóa chính)
 - `productName`: Tên sản phẩm
 - `description`: Mô tả sản phẩm
-- `importPrice`: Giá nhập
 - `salePrice`: Giá bán
-- `stockQuantity`: Số lượng tồn kho
 - `categoryId`: ID danh mục sản phẩm
 - `barcode`: Mã vạch sản phẩm
-- `unit`: Đơn vị tính (cái, kg, lít...)
 - `createdDate`: Ngày tạo sản phẩm
-- `isActive`: Trạng thái hoạt động
 
 **Phương thức:**
 - `addProduct()`: Thêm sản phẩm mới
@@ -196,6 +159,85 @@ Dưới đây là cấu trúc các đối tượng chính trong hệ thống:
 
 ---
 
+## 📂 Cấu trúc Thư mục
+
+```plaintext
+Project/
+ ├─ banHang/
+ │   ├─ bin/ 
+ │   ├─ Review/                                                                 # File bài tập
+ │   ├─ src/                                                                    # Mã nguồn chính xây dựng từ đầu đến bây giờ
+ │   │   ├─ Customer.java
+ │   │   ├─ CustomerOrder.java
+ │   │   ├─ Inventory.java
+ │   │   ├─ ListCustomerOrder.java
+ │   │   ├─ Main.java
+ │   │   ├─ ...
+ │   ├─ test/                                                                   # Thư mục chứa các lớp kiểm thử thủ công
+ │   │   ├─ testCustomerOrder.java
+ │   │   ├─ testInventory.java
+ │   │   ├─ testOrder.java
+ │   │   ├─ ...
+ ├─ gs-serving-web-content/
+ │   ├─ complete/
+ │   │   ├─ src/
+ │   │   │   ├── main/                                                          # Chứa mô hình MVC
+ │   │   │   │   ├── java/com/example/servingwebcontent                         
+ │   │   │   │   │                    ├── controller/                           # Các controller
+ │   │   │   │   │                    ├── database/                             # Các service, kết nối, truy vấn cơ sở dữ liệu
+ │   │   │   │   │                    ├── model/                                # Các class mô hình dữ liệu
+ │   │   │   │   │                    └── WebServingContentApplication.java     # Main() để chạy ứng dụng
+ │   │   │   │   └── resources/
+ │   │   │   │        ├── static/                                               
+ │   │   │   │        ├── templates/                                            # Giao diện
+ │   │   │   │        └── application.properties                                # File cấu hình ứng dụng
+ │   │   │   └── test/java/com/example/servingwebcontent                        
+ │   │   │       └── WebServingContentApplicationTest.java                      # Test ứng dụng
+ │   │   └── ...
+ │   ├─ initial/
+ │   ├─ ...
+Image/                                                                          # File chứa ảnh của dự án
+README.md                                                                       # Tài liệu mô tả dự án 
+```
+
+---
+## ✨ Tính năng chính
+
+### 👤 **Quản lý người dùng:**
+-  **Thêm / Sửa / Xóa người dùng**
+-  **Lọc theo loại:** Khách hàng (Customer), Nhà cung cấp (Seller)
+-  **Phân quyền:** Admin, Manager, Staff
+-  **Hiển thị danh sách người dùng theo vai trò**
+
+### 📦 **Quản lý sản phẩm:**
+-  **Thêm / Sửa / Xóa sản phẩm**
+-  **Gán sản phẩm cho nhà cung cấp**
+-  **Cập nhật số lượng sản phẩm sau mỗi đơn hàng**
+-  **Tìm kiếm sản phẩm theo tên, mã, danh mục**
+-  **Quản lý giá nhập, giá bán**
+
+### 🛒 **Quản lý đơn hàng:**
+-  **Tạo / Cập nhật đơn hàng**
+-  **Hiển thị danh sách đơn hàng**
+-  **Gán đơn hàng cho khách hàng và thanh toán**
+-  **Tính tổng tiền đơn hàng (bao gồm thuế, giảm giá)**
+-  **Theo dõi trạng thái đơn hàng**
+
+### 💳 **Quản lý thanh toán:**
+-  **Tạo và cập nhật thanh toán**
+-  **Hiển thị thông tin thanh toán chi tiết**
+-  **Cập nhật trạng thái, phương thức thanh toán**
+-  **Hỗ trợ nhiều hình thức:** Cash, E-wallet, Credit
+-  **Tạo hóa đơn điện tử**
+
+### 💾 **Lưu trữ dữ liệu:**
+-  **Dữ liệu được lưu vào file nhị phân**
+-  **Sử dụng `ObjectOutputStream`, `ObjectInputStream`**
+-  **Áp dụng `ArrayList`, `Map`, `HashMap` để quản lý dữ liệu trong bộ nhớ**
+-  **Backup và restore dữ liệu tự động**
+
+---
+
 ## 📊 Biểu đồ lớp (Class Diagram)
 ![Class Diagram](Project/Image/classdiagram.png)
 
@@ -224,3 +266,30 @@ Dưới đây là cấu trúc các đối tượng chính trong hệ thống:
 > nhét ảnh vào
 
 ---
+
+## 🖼️ Giao diện chương trình (Console)
+
+---
+
+## 💡 Công nghệ sử dụng
+
+- Ngôn ngữ lập trình: **Java**
+- Mô hình hướng đối tượng (OOP)
+- **Framework**: [Spring Boot](https://spring.io/projects/spring-boot)
+  - Quản lý luồng xử lý, cấu trúc theo mô hình MVC
+- Giao diện: Console (text-based)
+- Lưu trữ: File nhị phân 
+- Cấu trúc dữ liệu: `ArrayList`, `LinkedList`, `Map`,...
+
+---
+
+## 📚 Tài liệu tham khảo
+
+- Slide bài giảng môn Lập trình Hướng Đối Tượng – GVHD: Nguyễn Lệ Thu
+- Java Docs – Oracle
+- Stack Overflow – Community
+
+---
+
+> © 2025 Nhóm 10    
+> *Hệ thống mua bán cà phê trực tuyến – Mã nguồn mở cho mục đích học tập*
