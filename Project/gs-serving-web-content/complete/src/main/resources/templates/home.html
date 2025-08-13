@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <title>Coffee Shop - Trang chủ</title>
+    <style>
+        :root{
+            --coffee-950:#2b1c18;
+            --coffee-900:#3e2723;
+            --coffee-800:#4c332f;
+            --coffee-700:#5d4037;
+            --coffee-500:#6d4c41;
+            --accent:#c59d5f;
+            --accent-rgb:197,157,95;
+            --bg:#f7f2ef;
+            --radius-xl:34px;
+            --radius-lg:28px;
+            --radius-md:20px;
+        }
+        *{box-sizing:border-box;font-family:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+        body{
+            margin:0;
+            background:
+              radial-gradient(1300px 680px at 100% 0,rgba(var(--accent-rgb),.15),transparent 65%),
+              radial-gradient(1000px 560px at 0 100%,rgba(109,76,65,.14),transparent 70%),
+              linear-gradient(180deg,#f3ece9,#fff 45%);
+            color:var(--coffee-900);
+            -webkit-font-smoothing:antialiased;
+        }
+
+        /* NAV (floating over hero) */
+        .nav-bar{
+            position:fixed;
+            left:0;top:0;
+            width:100%;
+            display:flex;
+            justify-content:center;
+            padding:12px 24px;
+            z-index:100;
+            pointer-events:none;
+        }
+        .nav-inner{
+            pointer-events:auto;
+            width:100%;
+            max-width:1480px;
+            background:linear-gradient(135deg,var(--coffee-800),var(--coffee-900));
+            color:#fff;
+            border-radius:12px;
+            padding:10px 28px;
+            display:flex;
+            align-items:center;
+            gap:40px;
+            box-shadow:
+              0 14px 40px -18px rgba(62,39,35,.65),
+              0 4px 14px -6px rgba(0,0,0,.35);
+        }
+        .brand{
+            display:flex;
+            align-items:center;
+            gap:14px;
+            min-width:170px;
+        }
+        .logo{
+            width:46px;height:46px;
+            display:grid;place-items:center;
+            background:rgba(255,255,255,.12);
+            border:1px solid rgba(255,255,255,.25);
+            border-radius:16px;
+            font-size:24px;
+            backdrop-filter:blur(4px);
+        }
+        .brand-txt{
+            display:flex;
+            flex-direction:column;
+            line-height:1.1;
+        }
+        .brand-txt strong{font-size:15px;letter-spacing:.6px}
+        .brand-txt span{font-size:11px;opacity:.8;letter-spacing:.4px}
+        nav{
+            display:flex;
+            align-items:center;
+            gap:34px;
+            flex:1;
+        }
+        nav a{
+            position:relative;
+            font-size:12.5px;
+            font-weight:500;
+            letter-spacing:.4px;
+            text-decoration:none;
+            color:#fff;
+            padding:6px 0;
+        }
+        nav a:after{
+            content:"";
+            position:absolute;
+            left:0;bottom:0;
+            height:2px;width:0;
+            background:linear-gradient(90deg,var(--accent),#e8c885);
+            transition:.35s;
+            border-radius:2px;
+        }
+        nav a:hover:after{width:100%;}
+        .nav-actions{
+            display:flex;
+            align-items:center;
+            gap:10px;
+        }
+        .btn-nav{
+            font-size:12.5px;
+            font-weight:600;
+            letter-spacing:.4px;
+            padding:10px 20px 9px;
+            border-radius:22px;
+            border:0;
+            cursor:pointer;
+            background:#ffffff18;
+            color:#fff;
+            text-decoration:none;
+            display:inline-flex;
+            align-items:center;
+            gap:6px;
+            transition:.3s;
+            backdrop-filter:blur(4px);
+        }
+        .btn-nav:hover{background:#ffffff28}
+        .btn-nav.primary{
+            background:linear-gradient(135deg,var(--accent),#e1bc7d);
+            color:#382515;
+            box-shadow:0 8px 20px -10px rgba(var(--accent-rgb),.55);
+        }
+        .btn-nav.primary:hover{filter:brightness(1.05)}
+        .btn-nav.outline{
+            background:#ffffff10;
+            border:1px solid rgba(255,255,255,.45);
+        }
+
+        /* HERO */
+        .hero{
+            width:100%;
+            max-width:1480px;
+            margin:120px auto 70px;
+            padding:0 72px;
+            display:grid;
+            gap:80px;
+            grid-template-columns:repeat(auto-fit,minmax(380px,1fr));
+            align-items:center;
+        }
+        .hero-left{
+            display:flex;
+            flex-direction:column;
+            gap:34px;
+        }
+        h1{
+            margin:0;
+            font-size:64px;
+            line-height:1.03;
+            letter-spacing:.5px;
+            font-weight:700;
+            font-variation-settings:"opsz" 32;
+            background:linear-gradient(90deg,var(--coffee-900),var(--coffee-800));
+            -webkit-background-clip:text;
+            color:transparent;
+            position:relative;
+        }
+        h1 .accent{
+            background:linear-gradient(90deg,#caa866,#e8d5b0);
+            -webkit-background-clip:text;
+            color:transparent;
+            position:relative;
+        }
+        .hero-desc{
+            margin:0;
+            font-size:13px;
+            line-height:1.65;
+            max-width:500px;
+            color:#5f4c45;
+            letter-spacing:.25px;
+        }
+        .hero-actions{
+            display:flex;
+            flex-wrap:wrap;
+            gap:18px;
+        }
+        .cta-btn{
+            font-size:13px;
+            font-weight:600;
+            letter-spacing:.45px;
+            padding:15px 34px 14px;
+            border-radius:28px;
+            border:0;
+            cursor:pointer;
+            background:linear-gradient(135deg,var(--accent),#e1bc7d);
+            color:#2f1f13;
+            text-decoration:none;
+            box-shadow:0 14px 34px -14px rgba(var(--accent-rgb),.6);
+            transition:.35s;
+        }
+        .cta-btn:hover{filter:brightness(1.06);transform:translateY(-3px)}
+        .cta-btn.secondary{
+            background:#fff;
+            color:var(--coffee-800);
+            border:1px solid rgba(62,39,35,.18);
+            box-shadow:0 8px 22px -12px rgba(62,39,35,.25);
+        }
+        .cta-btn.secondary:hover{background:#fbf8f6}
+        .cta-btn.ghost{
+            background:#fff;
+            color:var(--coffee-800);
+            border:1px solid rgba(62,39,35,.14);
+            box-shadow:none;
+            padding:15px 30px 14px;
+        }
+        .cta-btn.ghost:hover{background:#f4eeeb}
+
+        .hero-visual{
+            position:relative;
+            aspect-ratio:5/3.6;
+            border-radius:50px;
+            background:
+              radial-gradient(circle at 82% 18%,rgba(var(--accent-rgb),.22),transparent 70%),
+              radial-gradient(circle at 20% 80%,rgba(109,76,65,.18),transparent 75%),
+              linear-gradient(135deg,#ffffff,#f4ece6 65%,#e9d9cf 100%);
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            box-shadow:
+              0 28px 70px -30px rgba(62,39,35,.55),
+              0 10px 32px -10px rgba(0,0,0,.20),
+              inset 0 1px 0 #ffffffcc;
+            border:1px solid rgba(62,39,35,.06);
+            overflow:hidden;
+        }
+        .hero-visual .cup{
+            font-size:150px;
+            animation:float 7s ease-in-out infinite;
+            filter:drop-shadow(0 12px 18px rgba(62,39,35,.35));
+        }
+        @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-22px)}}
+
+        /* FEATURED PRODUCTS */
+        .section{
+            width:100%;
+            max-width:1480px;
+            margin:0 auto 120px;
+            padding:0 72px;
+            display:flex;
+            flex-direction:column;
+            gap:40px;
+        }
+        .section h2{
+            margin:0;
+            font-size:24px;
+            letter-spacing:.6px;
+            font-weight:600;
+        }
+        .product-row{
+            display:grid;
+            gap:36px;
+            grid-template-columns:repeat(auto-fill,minmax(250px,1fr));
+        }
+        .card{
+            background:#fff;
+            border:1px solid rgba(62,39,35,.10);
+            border-radius:26px;
+            padding:16px 16px 18px;
+            display:flex;
+            flex-direction:column;
+            gap:14px;
+            position:relative;
+            box-shadow:
+              0 24px 46px -24px rgba(62,39,35,.55),
+              0 10px 28px -14px rgba(0,0,0,.18),
+              0 0 0 1px #ffffff;
+            transition:.4s;
+            overflow:hidden;
+        }
+        .card:hover{transform:translateY(-6px)}
+        .thumb{
+            width:100%;
+            aspect-ratio:4/3;
+            border-radius:18px;
+            background:linear-gradient(135deg,#f3edea,#e8ddd7);
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            overflow:hidden;
+            position:relative;
+        }
+        .thumb img{
+            width:100%;height:100%;object-fit:cover;
+            display:block;
+        }
+        .card h3{
+            margin:0;
+            font-size:15px;
+            font-weight:600;
+            letter-spacing:.4px;
+            color:var(--coffee-900);
+        }
+        .price{
+            font-size:14px;
+            font-weight:600;
+            letter-spacing:.3px;
+            color:var(--coffee-700);
+        }
+        .desc{
+            font-size:11.5px;
+            line-height:1.5;
+            color:#6d5952;
+            margin-top:-4px;
+        }
+        .mini-actions{
+            display:flex;
+            gap:8px;
+        }
+        .mini-actions a,
+        .mini-actions button{
+            flex:1;
+            border:0;
+            cursor:pointer;
+            font-size:11.5px;
+            font-weight:600;
+            letter-spacing:.35px;
+            padding:10px 12px 9px;
+            border-radius:14px;
+            background:#ece2dd;
+            color:#4c352f;
+            text-decoration:none;
+            display:inline-flex;
+            align-items:center;
+            justify-content:center;
+            transition:.3s;
+        }
+        .mini-actions a{
+            background:linear-gradient(135deg,var(--accent),#e1bc7d);
+            color:#392513;
+            box-shadow:0 8px 20px -10px rgba(var(--accent-rgb),.55);
+        }
+        .mini-actions a:hover{filter:brightness(1.06)}
+        .mini-actions button:hover{background:#e2d6d1}
+        .placeholder{
+            border:1px dashed rgba(62,39,35,.25);
+            background:rgba(255,255,255,.6);
+            color:#80645a;
+            font-size:12px;
+            font-weight:500;
+            display:grid;
+            place-items:center;
+            text-align:center;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width:1300px){
+            .hero{padding:0 54px}
+            .section{padding:0 54px}
+        }
+        @media (max-width:1000px){
+            h1{font-size:56px}
+        }
+        @media (max-width:820px){
+            h1{font-size:50px}
+            .hero{gap:60px}
+        }
+        @media (max-width:680px){
+            h1{font-size:44px}
+            .hero{padding:0 40px}
+            .section{padding:0 40px}
+            .hero-visual{border-radius:40px}
+        }
+        @media (max-width:520px){
+            h1{font-size:40px}
+            .hero{padding:0 26px;margin-top:130px}
+            .section{padding:0 26px;margin-bottom:90px}
+            .nav-inner{padding:10px 18px;gap:28px}
+            nav{gap:26px}
+            .brand{gap:10px}
+            .hero-visual{border-radius:34px}
+        }
+        @media (max-width:440px){
+            h1{font-size:36px}
+            .nav-inner{gap:18px}
+            nav{display:none}
+        }
+    </style>
+</head>
+<body>
+
+<!-- Floating Navigation -->
+<div class="nav-bar">
+    <div class="nav-inner">
+        <div class="brand">
+            <div class="logo">☕</div>
+            <div class="brand-txt">
+                <strong>Coffee Shop</strong>
+                <span>Cửa hàng cà phê</span>
+            </div>
+        </div>
+        <nav>
+            <a th:href="@{/}" aria-current="page">Trang chủ</a>
+            <a th:href="@{/products}">Sản phẩm</a>
+            <a th:href="@{/users}">Người dùng</a>
+            <a th:href="@{/orders}">Đơn hàng</a>
+        </nav>
+        <div class="nav-actions" th:if="${session == null || session.user == null}">
+            <a class="btn-nav primary" th:href="@{/login}">Đăng nhập</a>
+            <a class="btn-nav outline" th:href="@{/register}">Đăng ký</a>
+        </div>
+    </div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+    <div class="hero-left">
+        <h1>Coffee <span class="accent">Shop</span></h1>
+        <p class="hero-desc">
+            Chào mừng đến với Coffee Shop - nơi bạn tìm thấy những ly cà phê tuyệt vời nhất. Từ cà phê espresso đậm đà đến trà vải lài thanh mát, chúng tôi mang đến trải nghiệm thưởng thức cà phê hoàn hảo cho mọi tín đồ yêu thích hương vị thơm ngon.
+        </p>
+        <div class="hero-actions" th:if="${session == null || session.user == null}">
+            <a class="cta-btn" th:href="@{/register}">Bắt đầu miễn phí</a>
+            <a class="cta-btn" th:href="@{/products}">Khám phá sản phẩm</a>
+        </div>
+    </div>
+    <div class="hero-visual">
+        <div class="cup">☕</div>
+    </div>
+</section>
+
+<!-- FEATURED PRODUCTS (only section kept besides hero) -->
+<section class="section">
+    <h2>Sản phẩm nổi bật</h2>
+    <div class="product-row">
+
+        <!-- Static showcase items -->
+        <div class="card">
+            <div class="thumb">
+                <img src="https://images.unsplash.com/photo-1511920170033-f8396924c348?auto=format&fit=crop&w=600&q=60" alt="Cappuccino">
+            </div>
+            <h3>Cappuccino</h3>
+            <div class="price">45.000 đ</div>
+            <p class="desc">Cà phê espresso kết hợp sữa nóng và lớp bọt sữa mịn.</p>
+        </div>
+
+        <div class="card">
+            <div class="thumb">
+                <img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=600&q=60" alt="Cà phê đen">
+            </div>
+            <h3>Cà phê đen</h3>
+            <div class="price">30.000 đ</div>
+            <p class="desc">Đậm đà nguyên chất, hương thơm mạnh mẽ, vị cân bằng.</p>
+        </div>
+
+        <div class="card">
+            <div class="thumb">
+                <img src="https://images.unsplash.com/photo-1613470207321-9ca3b6d0d66f?auto=format&fit=crop&w=600&q=60" alt="Trà vải lài">
+            </div>
+            <h3>Trà vải lài</h3>
+            <div class="price">49.000 đ</div>
+            <p class="desc">Hòa quyện trà lài thanh, thịt vải ngọt mát & hương hoa nhẹ.</p>
+        </div>
+
+        <!-- Dynamic products from model (optional) -->
+        <div class="card" th:each="p : ${featuredProducts}">
+            <div class="thumb">
+                <img th:if="${p.imageUrl != null}" th:src="${p.imageUrl}" th:alt="${p.name}">
+                <span th:if="${p.imageUrl == null}" style="font-size:44px;color:#7a5f56">☕</span>
+            </div>
+            <h3 th:text="${p.name}">Tên sản phẩm</h3>
+            <div class="price" th:text="${#numbers.formatDecimal(p.price,1,'COMMA',0,'POINT')} + ' đ'">0 đ</div>
+            <div class="mini-actions">
+                <a th:href="@{'/products/' + ${p.id}}">Chi tiết</a>
+                <form th:action="@{'/cart/add/' + ${p.id}}" method="post" style="flex:1">
+                    <button type="submit">+ Giỏ</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Placeholder when there are still slots (visual spacing) -->
+        <div class="card placeholder" th:if="${featuredProducts == null || #lists.isEmpty(featuredProducts)}">
+            Chưa có sản phẩm nổi bật khác.
+        </div>
+
+    </div>
+</section>
+
+</body>
+</html>

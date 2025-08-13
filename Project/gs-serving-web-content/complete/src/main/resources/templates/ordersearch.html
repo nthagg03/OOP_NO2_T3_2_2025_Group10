@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <title>Coffee Shop - Tìm kiếm đơn hàng</title>
+    <style>
+        :root{
+            --coffee-950:#2a1b18;
+            --coffee-900:#3e2723;
+            --coffee-700:#5d4037;
+            --coffee-500:#6d4c41;
+            --accent:#c59d5f;
+            --accent-rgb:197,157,95;
+            --danger:#d84343;
+            --success:#2e7d32;
+            --warn:#c27d33;
+            --bg:#f4efec;
+        }
+        *{box-sizing:border-box;font-family:system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif}
+        body{
+            margin:0;
+            min-height:100vh;
+            display:flex;
+            flex-direction:column;
+            background:
+              radial-gradient(900px 520px at 100% 0,rgba(var(--accent-rgb),.20),transparent 70%),
+              linear-gradient(180deg,#f0e9e5,#ffffff 55%);
+            color:var(--coffee-900);
+        }
+        header{
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            padding:18px 30px;
+            background:linear-gradient(135deg,var(--coffee-700),var(--coffee-900));
+            color:#fff;
+            position:sticky;
+            top:0;
+            z-index:10;
+            box-shadow:0 6px 16px -6px rgba(62,39,35,.5);
+        }
+        .brand{display:flex;align-items:center;gap:14px;}
+        .logo{
+            width:46px;height:46px;
+            display:grid;place-items:center;
+            background:rgba(255,255,255,.15);
+            border:1px solid rgba(255,255,255,.25);
+            border-radius:14px;
+            font-size:22px;
+            backdrop-filter:blur(4px);
+        }
+        nav a{
+            color:#fff;
+            text-decoration:none;
+            font-size:14px;
+            font-weight:500;
+            margin-left:20px;
+            position:relative;
+            letter-spacing:.4px;
+        }
+        nav a:after{
+            content:"";
+            position:absolute;
+            left:0;bottom:-4px;
+            height:2px;width:0;
+            background:linear-gradient(90deg,var(--accent),#f0d094);
+            transition:.35s;
+        }
+        nav a:hover:after{width:100%;}
+        main{
+            width:100%;
+            max-width:1400px;
+            margin:40px auto 70px;
+            padding:0 42px;
+            flex:1;
+            display:flex;
+            flex-direction:column;
+            gap:34px;
+        }
+        h1{
+            margin:0;
+            font-size:32px;
+            letter-spacing:.6px;
+            font-weight:600;
+            background:linear-gradient(90deg,var(--coffee-900),var(--coffee-700));
+            -webkit-background-clip:text;
+            color:transparent;
+        }
+        .subtitle{
+            margin:6px 0 0;
+            font-size:14px;
+            color:#6d5a53;
+            letter-spacing:.3px;
+        }
+        /* Filter form */
+        .filters-card{
+            background:#fff;
+            border:1px solid rgba(62,39,35,.12);
+            border-radius:32px;
+            padding:30px 34px 26px;
+            display:flex;
+            flex-direction:column;
+            gap:26px;
+            box-shadow:0 18px 46px -14px rgba(62,39,35,.32),0 6px 18px -8px rgba(0,0,0,.18);
+            position:relative;
+            overflow:hidden;
+        }
+        .filters-card:before{
+            content:"";
+            position:absolute;
+            inset:0;
+            background:radial-gradient(circle at 78% 18%,rgba(var(--accent-rgb),.25),transparent 60%);
+            opacity:.5;
+        }
+        form.search-form{
+            display:grid;
+            gap:22px 26px;
+            grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+            position:relative;
+            z-index:1;
+        }
+        .field{
+            display:flex;
+            flex-direction:column;
+            gap:8px;
+        }
+        .field label{
+            font-size:12px;
+            font-weight:600;
+            letter-spacing:.6px;
+            text-transform:uppercase;
+            color:#6a524a;
+        }
+        .field input,
+        .field select{
+            border:1px solid rgba(62,39,35,.28);
+            background:#fff;
+            font-size:14px;
+            padding:14px 14px 12px;
+            border-radius:16px;
+            outline:none;
+            transition:.25s;
+            font-weight:500;
+            letter-spacing:.3px;
+        }
+        .field input:focus,
+        .field select:focus{
+            border-color:var(--accent);
+            box-shadow:0 0 0 3px rgba(var(--accent-rgb),.35);
+        }
+        .range-inline{
+            display:flex;
+            gap:8px;
+        }
+        .actions{
+            display:flex;
+            gap:14px;
+            align-items:flex-end;
+            flex-wrap:wrap;
+        }
+        .btn{
+            border:0;
+            cursor:pointer;
+            padding:15px 24px;
+            font-size:14px;
+            font-weight:600;
+            letter-spacing:.5px;
+            border-radius:18px;
+            background:linear-gradient(135deg,var(--accent),#e4bd7d);
+            color:#392514;
+            text-decoration:none;
+            display:inline-flex;
+            align-items:center;
+            gap:8px;
+            box-shadow:0 12px 28px -14px rgba(var(--accent-rgb),.55),0 4px 10px rgba(0,0,0,.08);
+            transition:.3s;
+        }
+        .btn:hover{filter:brightness(1.06);transform:translateY(-2px)}
+        .btn.secondary{
+            background:#efe6e1;
+            color:#513b34;
+            box-shadow:none;
+        }
+        .btn.secondary:hover{background:#e6dbd6}
+        .chips{
+            display:flex;
+            flex-wrap:wrap;
+            gap:10px;
+            font-size:12px;
+            position:relative;
+            z-index:1;
+        }
+        .chip{
+            padding:8px 14px 7px;
+            border-radius:20px;
+            background:#efe6e1;
+            font-weight:600;
+            letter-spacing:.4px;
+            display:inline-flex;
+            align-items:center;
+            gap:6px;
+        }
+        .chip button{
+            border:0;
+            background:#d2c4bd;
+            width:18px;height:18px;
+            border-radius:50%;
+            cursor:pointer;
+            font-size:11px;
+            display:grid;
+            place-items:center;
+            padding:0;
+            transition:.25s;
+        }
+        .chip button:hover{background:#c2b3ac}
+        .summary-line{
+            font-size:13px;
+            color:#715c54;
+            letter-spacing:.3px;
+            position:relative;
+            z-index:1;
+        }
+        /* Results table */
+        .results-card{
+            background:#fff;
+            border:1px solid rgba(62,39,35,.12);
+            border-radius:32px;
+            padding:30px 30px 24px;
+            display:flex;
+            flex-direction:column;
+            gap:22px;
+            box-shadow:0 18px 46px -14px rgba(62,39,35,.32),0 6px 18px -8px rgba(0,0,0,.18);
+            overflow:hidden;
+            position:relative;
+        }
+        .results-head{
+            display:flex;
+            justify-content:space-between;
+            gap:18px;
+            flex-wrap:wrap;
+            align-items:center;
+        }
+        .results-head h2{
+            margin:0;
+            font-size:20px;
+            font-weight:600;
+            letter-spacing:.5px;
+            display:flex;
+            align-items:center;
+            gap:10px;
+            color:var(--coffee-900);
+        }
+        .table-wrap{
+            overflow:auto;
+            scrollbar-width:thin;
+            border-radius:20px;
+        }
+        table{
+            width:100%;
+            border-collapse:collapse;
+            min-width:880px;
+            font-size:13.5px;
+            line-height:1.4;
+        }
+        thead th{
+            text-align:left;
+            padding:12px 16px;
+            font-weight:600;
+            font-size:11px;
+            letter-spacing:.7px;
+            text-transform:uppercase;
+            background:linear-gradient(180deg,#fff,#f8f5f4);
+            color:#6a5852;
+            position:sticky;
+            top:0;
+            border-bottom:1px solid #eee;
+        }
+        tbody td{
+            padding:11px 16px;
+            border-bottom:1px solid #f1ecea;
+            vertical-align:middle;
+        }
+        tbody tr:last-child td{border-bottom:none;}
+        tbody tr{transition:.22s}
+        tbody tr:hover{background:#fdfbf9;}
+        .code{
+            font-weight:600;
+            letter-spacing:.45px;
+            color:var(--coffee-900);
+        }
+        .status{
+            display:inline-flex;
+            align-items:center;
+            gap:6px;
+            font-size:10px;
+            font-weight:600;
+            padding:6px 10px 5px;
+            background:#efe7e3;
+            border-radius:20px;
+            letter-spacing:.5px;
+        }
+        .status.PAID{background:rgba(46,125,50,.12);color:var(--success);border:1px solid rgba(46,125,50,.35)}
+        .status.PENDING{background:rgba(194,125,51,.14);color:#925520;border:1px solid rgba(194,125,51,.4)}
+        .status.CANCEL{background:rgba(216,67,67,.12);color:var(--danger);border:1px solid rgba(216,67,67,.35)}
+        .mini-link{
+            text-decoration:none;
+            font-size:12px;
+            font-weight:600;
+            letter-spacing:.4px;
+            padding:8px 14px;
+            border-radius:14px;
+            background:#ede5e1;
+            color:var(--coffee-800);
+            transition:.25s;
+            display:inline-flex;
+        }
+        .mini-link:hover{background:#e3d9d4}
+        .empty{
+            text-align:center;
+            padding:34px 10px;
+            font-size:13px;
+            color:#806a62;
+        }
+        /* Pagination */
+        .pagination{
+            display:flex;
+            gap:10px;
+            flex-wrap:wrap;
+        }
+        .pagination a,
+        .pagination span{
+            min-width:42px;
+            padding:10px 14px;
+            border-radius:14px;
+            background:#efe6e1;
+            text-decoration:none;
+            font-size:13px;
+            font-weight:600;
+            letter-spacing:.4px;
+            color:#5b443c;
+            text-align:center;
+            transition:.25s;
+        }
+        .pagination a:hover{background:#e4dad4}
+        .pagination .active{
+            background:linear-gradient(135deg,var(--accent),#e4bd7d);
+            color:#392514;
+            box-shadow:0 10px 22px -10px rgba(var(--accent-rgb),.55);
+        }
+        footer{
+            text-align:center;
+            padding:50px 0 30px;
+            font-size:12px;
+            color:#78655d;
+        }
+        @media (max-width:1180px){
+            main{padding:0 34px}
+        }
+        @media (max-width:840px){
+            main{padding:0 26px}
+        }
+        @media (max-width:600px){
+            header{padding:16px 20px}
+            main{padding:0 20px}
+            h1{font-size:28px}
+            .filters-card,.results-card{border-radius:28px;padding:26px 24px 22px}
+        }
+        @media (max-width:460px){
+            .filters-card,.results-card{padding:26px 20px 20px;border-radius:24px}
+            nav a{margin-left:12px}
+        }
+    </style>
+    <script>
+        // Xóa chip nhanh bằng JS (chỉ thao tác UI, server side vẫn cần submit)
+        function removeFilter(name){
+            const el=document.querySelector('[name="'+name+'"]');
+            if(el){
+                if(el.type==='checkbox' || el.type==='radio'){ el.checked=false; }
+                else el.value='';
+            }
+            document.getElementById('orderSearchForm').submit();
+        }
+    </script>
+</head>
+<body>
+<header>
+    <div class="brand">
+        <div class="logo">☕</div>
+        <div style="display:flex;flex-direction:column;line-height:1.2">
+            <strong style="font-size:17px;letter-spacing:.5px">Coffee Shop</strong>
+            <span style="font-size:12px;opacity:.8;letter-spacing:.4px">Order Search</span>
+        </div>
+    </div>
+    <nav>
+        <a th:href="@{/}">Trang chủ</a>
+        <a th:href="@{/orders}">Đơn hàng</a>
+        <a th:href="@{/users}">Người dùng</a>
+        <a th:href="@{/logout}">Đăng xuất</a>
+    </nav>
+</header>
+
+<main>
+    <div>
+        <h1>Tìm kiếm đơn hàng</h1>
+        <p class="subtitle">Lọc linh hoạt theo mã, khách hàng, trạng thái, ngày tạo, giá trị...</p>
+    </div>
+
+    <!-- Bộ lọc -->
+    <section class="filters-card">
+        <form id="orderSearchForm" class="search-form" th:action="@{/orders/search}" method="get">
+            <div class="field">
+                <label for="code">Mã / Từ khóa</label>
+                <input id="code" name="q" placeholder="Mã đơn / tên KH / SĐT" th:value="${param.q}"/>
+            </div>
+            <div class="field">
+                <label for="status">Trạng thái</label>
+                <select id="status" name="status">
+                    <option value="">-- Tất cả --</option>
+                    <option value="PAID" th:selected="${param.status=='PAID'}">Đã thanh toán</option>
+                    <option value="PENDING" th:selected="${param.status=='PENDING'}">Chờ xử lý</option>
+                    <option value="CANCEL" th:selected="${param.status=='CANCEL'}">Hủy</option>
+                </select>
+            </div>
+            <div class="field">
+                <label>Ngày tạo (từ)</label>
+                <input type="date" name="fromDate" th:value="${param.fromDate}"/>
+            </div>
+            <div class="field">
+                <label>Ngày tạo (đến)</label>
+                <input type="date" name="toDate" th:value="${param.toDate}"/>
+            </div>
+            <div class="field">
+                <label>Giá trị từ (đ)</label>
+                <input type="number" min="0" name="minAmount" th:value="${param.minAmount}"/>
+            </div>
+            <div class="field">
+                <label>Giá trị đến (đ)</label>
+                <input type="number" min="0" name="maxAmount" th:value="${param.maxAmount}"/>
+            </div>
+            <div class="field">
+                <label for="payment">Thanh toán</label>
+                <select id="payment" name="paymentMethod">
+                    <option value="">-- Tất cả --</option>
+                    <option value="CASH" th:selected="${param.paymentMethod=='CASH'}">Tiền mặt</option>
+                    <option value="CARD" th:selected="${param.paymentMethod=='CARD'}">Thẻ</option>
+                    <option value="ONLINE" th:selected="${param.paymentMethod=='ONLINE'}">Online</option>
+                </select>
+            </div>
+            <div class="field">
+                <label for="sort">Sắp xếp</label>
+                <select id="sort" name="sort">
+                    <option value="">Mặc định</option>
+                    <option value="newest" th:selected="${param.sort=='newest'}">Mới nhất</option>
+                    <option value="oldest" th:selected="${param.sort=='oldest'}">Cũ nhất</option>
+                    <option value="amountDesc" th:selected="${param.sort=='amountDesc'}">Tổng giảm dần</option>
+                    <option value="amountAsc" th:selected="${param.sort=='amountAsc'}">Tổng tăng dần</option>
+                </select>
+            </div>
+            <div class="actions">
+                <button class="btn" type="submit">Tìm kiếm</button>
+                <a class="btn secondary" th:href="@{/orders/search}">Đặt lại</a>
+            </div>
+        </form>
+
+        <!-- Chips bộ lọc hiện tại -->
+        <div class="chips" th:if="${not #lists.isEmpty(activeFilters)}">
+            <div class="chip" th:each="f : ${activeFilters}">
+                <span th:text="${f.label}">Filter</span>
+                <button type="button" th:attr="onclick=${'removeFilter(\\'' + f.name + '\\')'}" aria-label="Xóa">&times;</button>
+            </div>
+        </div>
+
+        <!-- Tóm tắt -->
+        <div class="summary-line" th:if="${totalCount != null}">
+            <strong th:text="${totalCount}">0</strong> kết quả
+            <span th:if="${durationMs != null}" th:text="' • ' + ${durationMs} + ' ms'"></span>
+        </div>
+    </section>
+
+    <!-- Kết quả -->
+    <section class="results-card">
+        <div class="results-head">
+            <h2>Kết quả</h2>
+            <div style="display:flex;gap:10px;flex-wrap:wrap">
+                <a th:href="@{/orders/export(csv=true)}"
+                   class="mini-link" th:if="${not #lists.isEmpty(orders)}">Xuất CSV</a>
+                <a th:href="@{/orders/export(pdf=true)}"
+                   class="mini-link" th:if="${not #lists.isEmpty(orders)}">Xuất PDF</a>
+            </div>
+        </div>
+        <div class="table-wrap">
+            <table>
+                <thead>
+                <tr>
+                    <th>Mã</th>
+                    <th>Khách hàng</th>
+                    <th>Ngày</th>
+                    <th>Thanh toán</th>
+                    <th>Tổng</th>
+                    <th>Trạng thái</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="o : ${orders}">
+                    <td class="code" th:text="${o.code}">ODR001</td>
+                    <td>
+                        <strong th:text="${o.customerName}">Khách</strong><br/>
+                        <span style="font-size:11px;color:#7d6760" th:text="${o.customerPhone}">SĐT</span>
+                    </td>
+                    <td th:text="${#dates.format(o.createdAt,'dd/MM/yyyy HH:mm')}">--</td>
+                    <td th:text="${o.paymentMethod}">CASH</td>
+                    <td th:text="${#numbers.formatDecimal(o.totalAmount,1,'COMMA',0,'POINT')} + ' đ'">0 đ</td>
+                    <td><span class="status" th:classappend="' ' + ${o.status}" th:text="${o.status}"></span></td>
+                    <td>
+                        <a th:href="@{'/orders/' + ${o.id}}" class="mini-link" style="padding:6px 10px;font-size:11px">Chi tiết</a>
+                    </td>
+                </tr>
+                <tr th:if="${#lists.isEmpty(orders)}">
+                    <td colspan="7" class="empty">Không tìm thấy đơn hàng phù hợp.</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Phân trang -->
+        <div class="pagination" th:if="${totalPages > 1}">
+            <a th:if="${currentPage > 0}"
+               th:href="@{|/orders/search?page=${currentPage-1}&size=${pageSize}&q=${param.q}&status=${param.status}|}">&laquo;</a>
+            <a th:each="i : ${#numbers.sequence(0, totalPages-1)}"
+               th:href="@{|/orders/search?page=${i}&size=${pageSize}&q=${param.q}&status=${param.status}|}"
+               th:text="${i+1}"
+               th:classappend="${i == currentPage} ? 'active'"></a>
+            <a th:if="${currentPage+1 < totalPages}"
+               th:href="@{|/orders/search?page=${currentPage+1}&size=${pageSize}&q=${param.q}&status=${param.status}|}">&raquo;</a>
+        </div>
+    </section>
+</main>
+
+<footer>&copy; <span th:text="${#dates.format(#dates.createNow(),'yyyy')}"></span> Coffee Shop</footer>
+</body>
+</html>
