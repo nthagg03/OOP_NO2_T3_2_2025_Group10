@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Coffee Shop - Thêm sản phẩm</title>
+    <style>
+        :root{--coffee-900:#3e2723;--coffee-700:#5d4037;--accent:#c59d5f;--cream:#fff8e1}
+        *{box-sizing:border-box}
+        body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;color:var(--coffee-900);background:linear-gradient(180deg,#efebe9,#fff 30%)}
+        header{display:flex;align-items:center;gap:10px;padding:16px 20px;background:linear-gradient(135deg,#5d4037,#3e2723);color:#fff}
+        header .logo{width:36px;height:36px;display:grid;place-items:center;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:8px}
+        main{max-width:860px;margin:20px auto;padding:0 16px}
+        .card{background:#fff;border:1px solid rgba(0,0,0,.06);border-radius:16px;box-shadow:0 8px 22px rgba(62,39,35,.10);overflow:hidden}
+        .content{padding:22px}
+        .grid{display:grid;gap:14px}
+        .row{display:flex;gap:12px}
+        .field{flex:1;display:grid;gap:6px}
+        .label{font-size:14px;color:#5c4742}
+        .input,.select{border:1px solid #d4cfcf;border-radius:12px;overflow:hidden;background:#fff}
+        input,select,textarea{border:0;outline:none;padding:12px 14px;font-size:15px;width:100%;background:transparent}
+        .actions{display:flex;gap:10px;margin-top:10px}
+        .btn{border:0;border-radius:10px;padding:10px 14px;font-weight:600;cursor:pointer}
+        .btn.primary{background:var(--accent);color:#1d140f}
+        .btn.secondary{background:#fff;color:var(--coffee-900);border:1px solid #d4cfcf}
+        a.link{color:#5d4037;text-decoration:none}
+    </style>
+</head>
+<body>
+<header>
+    <div class="logo">📦</div>
+    <div>Thêm sản phẩm</div>
+</header>
+<main>
+    <div class="card">
+        <div class="content">
+            <form th:action="@{/products}" method="post" class="grid">
+                <div class="row">
+                    <div class="field">
+                        <label class="label" for="productName">Tên sản phẩm</label>
+                        <div class="input"><input id="productName" name="productName" type="text" required /></div>
+                    </div>
+                    <div class="field">
+                        <label class="label" for="category">Danh mục</label>
+                        <div class="select">
+                            <select id="category" name="category">
+                                <option value="Coffee">Coffee</option>
+                                <option value="Tea">Tea</option>
+                                <option value="Cake">Cake</option>
+                                <option value="Other">Khác</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="field">
+                        <label class="label" for="price">Giá (VNĐ)</label>
+                        <div class="input"><input id="price" name="price" type="number" min="0" required /></div>
+                    </div>
+                    <div class="field">
+                        <label class="label" for="stock">Số lượng tồn</label>
+                        <div class="input"><input id="stock" name="stock" type="number" min="0" required /></div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="field">
+                        <label class="label" for="description">Mô tả</label>
+                        <div class="input">
+                            <textarea id="description" name="description" rows="3"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                <div class="actions">
+                    <button class="btn primary" type="submit">Lưu</button>
+                    <a class="btn secondary" th:href="@{/products}">Hủy</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</main>
+</body>
+</html>
