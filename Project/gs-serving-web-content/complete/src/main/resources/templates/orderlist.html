@@ -1,5 +1,335 @@
-package templates;
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <title>Coffee Shop - Đơn hàng</title>
+    <style>
+        :root{
+            --coffee-900:#3e2723;
+            --coffee-700:#5d4037;
+            --coffee-500:#6d4c41;
+            --accent:#c59d5f;
+            --accent-rgb:197,157,95;
+            --bg:#f4efec;
+            --cream:#fffdf9;
+            --success:#2e7d32;
+            --warn:#c27d33;
+            --danger:#d84343;
+        }
+        *{box-sizing:border-box;font-family:system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif}
+        body{
+            margin:0;
+            background:
+              radial-gradient(900px 500px at 100% 0,rgba(var(--accent-rgb),.20),transparent 70%),
+              linear-gradient(180deg,#f0e9e5,#ffffff 55%);
+            color:var(--coffee-900);
+            min-height:100vh;
+            display:flex;
+            flex-direction:column;
+        }
+        header{
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            padding:18px 30px;
+            background:linear-gradient(135deg,var(--coffee-700),var(--coffee-900));
+            color:#fff;
+            position:sticky;
+            top:0;
+            z-index:10;
+            box-shadow:0 6px 16px -6px rgba(62,39,35,.5);
+        }
+        .brand{
+            display:flex;
+            align-items:center;
+            gap:14px;
+        }
+        .logo{
+            width:46px;
+            height:46px;
+            display:grid;
+            place-items:center;
+            background:rgba(255,255,255,.15);
+            border:1px solid rgba(255,255,255,.25);
+            border-radius:14px;
+            font-size:22px;
+            backdrop-filter:blur(4px);
+        }
+        nav a{
+            color:#fff;
+            text-decoration:none;
+            font-size:14px;
+            font-weight:500;
+            margin-left:18px;
+            position:relative;
+        }
+        nav a:after{
+            content:"";
+            position:absolute;
+            left:0;bottom:-4px;
+            height:2px;width:0;
+            background:linear-gradient(90deg,var(--accent),#f0d094);
+            transition:.35s;
+        }
+        nav a:hover:after{width:100%;}
+        main{
+            width:100%;
+            max-width:1250px;
+            margin:36px auto 70px;
+            padding:0 34px;
+            flex:1;
+            display:flex;
+            flex-direction:column;
+            gap:26px;
+        }
+        h1{
+            margin:0;
+            font-size:30px;
+            letter-spacing:.5px;
+            font-weight:600;
+            background:linear-gradient(90deg,var(--coffee-900),var(--coffee-700));
+            -webkit-background-clip:text;
+            color:transparent;
+        }
+        .filters{
+            display:flex;
+            gap:16px;
+            flex-wrap:wrap;
+            align-items:center;
+            background:#fff;
+            padding:12px 16px;
+            border-radius:20px;
+            border:1px solid rgba(62,39,35,.15);
+            box-shadow:0 6px 18px -6px rgba(62,39,35,.25),0 2px 6px rgba(0,0,0,.08);
+        }
+        .filters select,
+        .filters input{
+            border:1px solid rgba(62,39,35,.25);
+            background:#fff;
+            padding:10px 14px;
+            border-radius:14px;
+            font-size:14px;
+            outline:none;
+            min-width:160px;
+            transition:.25s;
+        }
+        .filters select:focus,
+        .filters input:focus{
+            border-color:var(--accent);
+            box-shadow:0 0 0 3px rgba(var(--accent-rgb),.35);
+        }
+        .filters button{
+            border:0;
+            background:linear-gradient(135deg,var(--accent),#e1b979);
+            padding:12px 20px;
+            border-radius:16px;
+            font-weight:600;
+            font-size:14px;
+            cursor:pointer;
+            color:#3a281a;
+            box-shadow:0 8px 18px -4px rgba(var(--accent-rgb),.55);
+            transition:.3s;
+        }
+        .filters button:hover{
+            filter:brightness(1.06);
+            transform:translateY(-2px);
+        }
+        .card{
+            background:#fff;
+            border:1px solid rgba(62,39,35,.10);
+            border-radius:26px;
+            padding:0 0 10px;
+            overflow:hidden;
+            box-shadow:0 16px 36px -12px rgba(62,39,35,.35),0 6px 18px -6px rgba(0,0,0,.15);
+        }
+        .table-wrap{
+            overflow:auto;
+            scrollbar-width:thin;
+        }
+        table{
+            width:100%;
+            border-collapse:collapse;
+            font-size:14px;
+            line-height:1.4;
+        }
+        thead th{
+            position:sticky;
+            top:0;
+            background:linear-gradient(180deg,#fff,#f8f5f4);
+            text-align:left;
+            padding:14px 18px;
+            font-weight:600;
+            font-size:12.5px;
+            letter-spacing:.7px;
+            text-transform:uppercase;
+            color:#6a5852;
+            border-bottom:1px solid #eee;
+        }
+        tbody td{
+            padding:14px 18px;
+            border-bottom:1px solid #f1ecea;
+            vertical-align:middle;
+        }
+        tbody tr:last-child td{border-bottom:none;}
+        tbody tr{
+            transition:.25s;
+        }
+        tbody tr:hover{
+            background:#fdfbf9;
+        }
+        .code{
+            font-weight:600;
+            color:var(--coffee-900);
+            letter-spacing:.5px;
+        }
+        .status{
+            display:inline-flex;
+            align-items:center;
+            gap:6px;
+            font-size:11px;
+            font-weight:600;
+            padding:6px 12px 5px;
+            background:#efe7e3;
+            border-radius:24px;
+            letter-spacing:.6px;
+        }
+        .status.paid{
+            background:rgba(46,125,50,.12);
+            color:var(--success);
+            border:1px solid rgba(46,125,50,.35);
+        }
+        .status.pending{
+            background:rgba(194,125,51,.15);
+            color:#925520;
+            border:1px solid rgba(194,125,51,.35);
+        }
+        .status.cancel{
+            background:rgba(216,67,67,.12);
+            color:var(--danger);
+            border:1px solid rgba(216,67,67,.35);
+        }
+        .mini-btn{
+            padding:9px 15px;
+            font-size:12.5px;
+            font-weight:600;
+            border-radius:14px;
+            border:0;
+            cursor:pointer;
+            background:#eee3dd;
+            color:var(--coffee-900);
+            text-decoration:none;
+            transition:.25s;
+            display:inline-flex;
+            align-items:center;
+            gap:6px;
+            letter-spacing:.3px;
+        }
+        .mini-btn:hover{background:#e3d7d2;}
+        .empty{
+            padding:44px 18px;
+            text-align:center;
+            color:#7b6560;
+            font-size:14px;
+        }
+        footer{
+            text-align:center;
+            padding:50px 0 30px;
+            font-size:12px;
+            color:#78655d;
+        }
+        @media (max-width:1020px){
+            main{padding:0 26px}
+        }
+        @media (max-width:720px){
+            h1{font-size:26px}
+            .filters{flex-direction:column;align-items:stretch}
+            .card{border-radius:22px;}
+        }
+        @media (max-width:520px){
+            header{padding:16px 20px}
+            main{margin:28px auto 50px;padding:0 20px}
+        }
+    </style>
+</head>
+<body>
+<header>
+    <div class="brand">
+        <div class="logo">☕</div>
+        <div style="display:flex;flex-direction:column;line-height:1.2">
+            <strong style="font-size:17px;letter-spacing:.5px">Coffee Shop</strong>
+            <span style="font-size:12px;opacity:.8;font-weight:400;letter-spacing:.4px">Đơn hàng</span>
+        </div>
+    </div>
+    <nav>
+        <a th:href="@{/}">Trang chủ</a>
+        <a th:href="@{/logout}">Đăng xuất</a>
+    </nav>
+</header>
+<main>
+    <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:20px;align-items:center">
+        <h1>Danh sách đơn hàng</h1>
+        <form th:action="@{/orders}" method="get" class="filters">
+            <input type="text" name="q" placeholder="Mã / khách hàng..." th:value="${param.q}"/>
+            <select name="status">
+                <option value="">--Trạng thái--</option>
+                <option value="PAID" th:selected="${param.status=='PAID'}">Đã thanh toán</option>
+                <option value="PENDING" th:selected="${param.status=='PENDING'}">Chờ xử lý</option>
+                <option value="CANCEL" th:selected="${param.status=='CANCEL'}">Hủy</option>
+            </select>
+            <select name="sort">
+                <option value="">Sắp xếp</option>
+                <option value="newest" th:selected="${param.sort=='newest'}">Mới nhất</option>
+                <option value="oldest" th:selected="${param.sort=='oldest'}">Cũ nhất</option>
+                <option value="amountDesc" th:selected="${param.sort=='amountDesc'}">Tổng giảm dần</option>
+                <option value="amountAsc" th:selected="${param.sort=='amountAsc'}">Tổng tăng dần</option>
+            </select>
+            <button type="submit">Lọc</button>
+        </form>
+    </div>
 
-public class orderlist {
-    
-}
+    <div class="card">
+        <div class="table-wrap">
+            <table>
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Mã</th>
+                    <th>Khách hàng</th>
+                    <th>Ngày tạo</th>
+                    <th>Tổng</th>
+                    <th>Trạng thái</th>
+                    <th style="text-align:right;">Hành động</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="o, st : ${orders}">
+                    <td th:text="${st.count}"></td>
+                    <td class="code" th:text="${o.code}">ODR001</td>
+                    <td>
+                        <strong th:text="${o.customerName}">Khách</strong><br/>
+                        <span style="font-size:12px;color:#79665e" th:text="${o.customerPhone}"></span>
+                    </td>
+                    <td th:text="${#dates.format(o.createdAt, 'dd/MM/yyyy HH:mm')}"></td>
+                    <td th:text="${#numbers.formatDecimal(o.totalAmount,1,'COMMA',2,'POINT')} + ' đ'">0 đ</td>
+                    <td>
+                        <span class="status"
+                              th:classappend="${o.status=='PAID'} ? ' paid' : (o.status=='PENDING' ? ' pending' : ' cancel')"
+                              th:text="${o.status}">
+                        </span>
+                    </td>
+                    <td style="text-align:right;">
+                        <a class="mini-btn" th:href="@{'/orders/' + ${o.id}}">Chi tiết</a>
+                    </td>
+                </tr>
+                <tr th:if="${#lists.isEmpty(orders)}">
+                    <td colspan="7" class="empty">Không có đơn hàng.</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+<footer>&copy; <span th:text="${#dates.format(#dates.createNow(),'yyyy')}"></span> Coffee Shop</footer>
+</body>
+</html>
