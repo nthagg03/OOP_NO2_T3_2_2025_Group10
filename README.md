@@ -255,15 +255,15 @@ README.md                                                                       
 
 ### 3. Bán hàng
 
-> nhét ảnh vào
+![Order Activity Diagram](Project/Image/OrderDiagram.png)
 
 ### 4. Thanh toán
 
-> nhét ảnh vào
+![Pay Activity Diagram](Project/Image/PayDiagram.png)
 
 ### 5. Tìm kiếm danh sách đơn hàng đã thanh toán của khách hàng cụ thể 
 
-> nhét ảnh vào
+![Customer Order List Diagram](Project/Image/CustomerOrderListDiagram.png)
 
 ---
 
