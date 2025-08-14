@@ -263,7 +263,7 @@ README.md                                                                       
 
 ### 5. Tìm kiếm danh sách đơn hàng đã thanh toán của khách hàng cụ thể 
 
-![Customer Order List Diagram](Project/Image/CustomerOrderListDiagram.png)
+![Customer Order List Diagram](Project/Image/CustomOrderListDiagram.png)
 
 ---
 
