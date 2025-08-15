@@ -403,10 +403,10 @@
         </div>
     </div>
     <nav>
-        <a th:href="@{/dashboard}" href="dashboard.html" aria-current="page">Dashboard</a>
-        <a th:href="@{/users}" href="userlist.html">Người dùng</a>
-        <a th:href="@{/products}" href="productlist.html">Sản phẩm</a>
-        <a th:href="@{/logout}" href="home.html">Đăng xuất</a>
+        <a id="navDashboard" th:href="@{/dashboard}" href="dashboard.html" aria-current="page">Dashboard</a>
+        <a id="navUsers" th:href="@{/users}" href="userlist.html">Người dùng</a>
+        <a id="navProducts" th:href="@{/products}" href="productlist.html">Sản phẩm</a>
+        <a id="navLogout" th:href="@{/logout}" href="home.html">Đăng xuất</a>
     </nav>
 </header>
 
@@ -598,5 +598,27 @@
 </main>
 
 <footer>&copy; <span th:text="${#dates.format(#dates.createNow(),'yyyy')}"></span> Coffee Shop – Dashboard</footer>
+<script>
+    (function(){
+        // helper: try server route then fallback to href
+        function navigatePreferServer(path, fallback){
+            try{
+                fetch(path, {method:'HEAD', cache:'no-store'})
+                    .then(function(res){ if(res && (res.status===200 || res.status===204)) location.href = path; else location.href = fallback; })
+                    .catch(function(){ location.href = fallback; });
+            }catch(e){ location.href = fallback; }
+        }
+
+        const navUsers = document.getElementById('navUsers');
+        const navProducts = document.getElementById('navProducts');
+        const navDashboard = document.getElementById('navDashboard');
+        const navLogout = document.getElementById('navLogout');
+
+        if(navUsers){ navUsers.addEventListener('click', function(e){ e.preventDefault(); navigatePreferServer('/users', this.getAttribute('href') || 'userlist.html'); }); }
+        if(navProducts){ navProducts.addEventListener('click', function(e){ e.preventDefault(); navigatePreferServer('/products', this.getAttribute('href') || 'productlist.html'); }); }
+        if(navDashboard){ navDashboard.addEventListener('click', function(e){ e.preventDefault(); navigatePreferServer('/dashboard', this.getAttribute('href') || 'dashboard.html'); }); }
+        if(navLogout){ navLogout.addEventListener('click', function(e){ e.preventDefault(); try{ sessionStorage.removeItem('currentUser'); }catch(_){}; navigatePreferServer('/logout', this.getAttribute('href') || 'home.html'); }); }
+    })();
+</script>
 </body>
 </html>
