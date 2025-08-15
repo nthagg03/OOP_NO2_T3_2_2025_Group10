@@ -177,4 +177,41 @@ public class userAiven {
         return null;
     }
 
+    // Helpers for seeding and admin tasks
+    public User getByEmail(String email) {
+        try (Connection conn = myConnection.getConnection()) {
+            String sql = "SELECT * FROM Users WHERE email = ?";
+            PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setString(1, email);
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {
+                User user = new User();
+                user.setUser(rs.getString("userID"), rs.getString("name"),
+                             Gender.valueOf(rs.getString("gender")),
+                             rs.getString("birthDate"), rs.getString("phoneNumber"),
+                             rs.getString("email"), rs.getString("address"),
+                             UserType.valueOf(rs.getString("userType")));
+                user.setPassword(rs.getString("password"));
+                return user;
+            }
+        } catch (Exception e) {
+            System.out.println("Error in getByEmail:");
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public void updatePasswordByEmail(String email, String newPassword) {
+        try (Connection conn = myConnection.getConnection()) {
+            String sql = "UPDATE Users SET password = ? WHERE email = ?";
+            PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setString(1, newPassword);
+            pst.setString(2, email);
+            pst.executeUpdate();
+        } catch (Exception e) {
+            System.out.println("Error in updatePasswordByEmail:");
+            e.printStackTrace();
+        }
+    }
+
 }

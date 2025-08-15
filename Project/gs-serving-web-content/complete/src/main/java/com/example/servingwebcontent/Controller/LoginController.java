@@ -63,10 +63,17 @@ public class LoginController {
                 return "login";
             }
             session.setAttribute("name", loggedIn.getName());
-            return "redirect:/greeting";
+            // Sau khi đăng nhập thành công, chuyển đến dashboard
+            return "redirect:/dashboard";
         } catch (Exception e) {
             model.addAttribute("error", "❌ Lỗi khi đăng nhập: " + e.getMessage());
             return "login";
         }
+    }
+
+    // Dashboard
+    @GetMapping("/dashboard")
+    public String dashboard() {
+        return "dashboard";
     }
 }

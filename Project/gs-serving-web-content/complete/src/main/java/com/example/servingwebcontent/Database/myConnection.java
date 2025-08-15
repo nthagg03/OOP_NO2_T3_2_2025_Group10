@@ -7,13 +7,13 @@ import org.springframework.beans.factory.annotation.Value;
 
 @Component
 public class myConnection {
-    @Value("${app.database.url}")
+    @Value("${spring.datasource.url}")
     private String urlString;
-    @Value("${app.database.driver}")
+    @Value("${spring.datasource.driver}")
     private String appDriver;
-    @Value("${app.database.user}")
+    @Value("${spring.datasource.user}")
     private String appUser;
-    @Value("${app.database.password}")
+    @Value("${spring.datasource.password}")
     private String appPassword;
     
     public Connection getConnection() {

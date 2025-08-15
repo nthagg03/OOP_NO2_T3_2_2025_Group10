@@ -20,6 +20,15 @@ public class ProductListController {
 	public String list(Model model) {
 		try {
 			ArrayList<Product> products = pa.listProducts();
+			// Nếu DB trống hoặc lỗi trả về danh sách rỗng, seed 3 sản phẩm mặc định để demo
+			if (products == null || products.isEmpty()) {
+				ArrayList<Product> seed = new ArrayList<>();
+				Product p1 = new Product(null, "Cappuchino", 45000, 20, "Cà phê sữa bọt mịn", "Coffee");
+				Product p2 = new Product(null, "Trà Vải Lài", 39000, 30, "Trà lài hương vải tươi mát", "Tea");
+				Product p3 = new Product(null, "Matcha", 42000, 25, "Matcha Nhật Bản thơm béo", "Tea");
+				seed.add(p1); seed.add(p2); seed.add(p3);
+				products = seed;
+			}
 			model.addAttribute("products", products);
 		} catch (Exception e) {
 			model.addAttribute("error", "Không thể tải danh sách sản phẩm: " + e.getMessage());

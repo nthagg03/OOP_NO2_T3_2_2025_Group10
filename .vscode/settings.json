@@ -1,4 +1,15 @@
 {
+  "java.jdt.ls.java.home": "C:/Program Files/Eclipse Adoptium/jdk-21.0.7.6-hotspot",
+  "java.configuration.runtimes": [
+    {
+      "name": "JavaSE-21",
+      "path": "C:/Program Files/Eclipse Adoptium/jdk-21.0.7.6-hotspot",
+      "default": true
+    }
+  ],
+  "maven.terminal.useJavaHome": true
+}
+{
     "java.project.sourcePaths": [
         "Project/banHang/test",
         "Project/banHang/src",
