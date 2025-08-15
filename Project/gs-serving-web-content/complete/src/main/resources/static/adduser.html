@@ -30,7 +30,7 @@
 		<main>
 			<div class="card">
 				<div class="content">
-					<form th:action="@{/userlist/add}" method="post" class="grid">
+					<form id="addUserForm" action="#" method="post" class="grid">
 						<div class="row">
 							<div class="field">
 								<label class="label" for="fullName">Họ và tên</label>
@@ -80,12 +80,36 @@
 							</div>
 						</div>
 
-						<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
 						<div class="actions">
 							<button class="btn primary" type="submit">Lưu</button>
-							<a class="btn secondary" th:href="@{/userlist}">Hủy</a>
+							<a class="btn secondary" href="userlist.html">Hủy</a>
 						</div>
-					</form>
+						</form>
+						<script>
+							(function(){
+								const form = document.getElementById('addUserForm');
+								function genId(){ return 'u_' + Date.now(); }
+								form.addEventListener('submit', function(ev){
+									ev.preventDefault();
+									const u = {
+										id: genId(),
+										name: (form.name.value||'').trim(),
+										username: (form.userId && form.userId.value) ? form.userId.value.trim() : '',
+										email: (form.email.value||'').trim(),
+										userType: (form.userType && form.userType.value) ? form.userType.value : 'Customer',
+										phoneNumber: (form.phoneNumber.value||'').trim()
+									};
+									if(!u.name || !u.email){ alert('Tên và email là bắt buộc'); return; }
+									try{
+										const raw = localStorage.getItem('users');
+										const users = raw ? JSON.parse(raw) : [];
+										users.push(u);
+										localStorage.setItem('users', JSON.stringify(users));
+										window.location.href = 'userlist.html';
+									}catch(e){ console.error(e); alert('Lỗi lưu người dùng'); }
+								});
+							})();
+						</script>
 				</div>
 			</div>
 		</main>

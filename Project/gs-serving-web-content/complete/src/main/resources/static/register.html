@@ -219,7 +219,7 @@
         </div>
     </div>
 
-    <form th:action="@{/register}" method="post">
+    <form id="registerForm" action="#" method="post">
         <div class="grid">
             <div class="field">
                 <label for="fullName">Họ tên</label>
@@ -263,20 +263,42 @@
             </div>
         </div>
 
-        <div th:if="${error}" class="alert error">
-            <strong>✖</strong> <span th:text="${error}">Lỗi</span>
-        </div>
-        <div th:if="${message}" class="alert success">
-            <strong>✓</strong> <span th:text="${message}">Thành công</span>
-        </div>
+        <div id="alertError" class="alert error" style="display:none"><strong>✖</strong> Lỗi: Vui lòng kiểm tra lại.</div>
+        <div id="alertSuccess" class="alert success" style="display:none"><strong>✔</strong> Đã tạo tài khoản. Chuyển hướng...</div>
 
         <div class="actions">
             <button class="btn" type="submit">Tạo tài khoản</button>
-            <div class="alt">
-                Đã có tài khoản? <a th:href="@{/login}">Đăng nhập</a>
-            </div>
+            <div class="alt">Đã có tài khoản? <a href="login.html">Đăng nhập</a></div>
         </div>
     </form>
+    <script>
+        (function(){
+            const form = document.getElementById('registerForm');
+            const alertError = document.getElementById('alertError');
+            const alertSuccess = document.getElementById('alertSuccess');
+            function genId(){ return 'u_' + Date.now(); }
+            form.addEventListener('submit', function(ev){
+                ev.preventDefault();
+                alertError.style.display = 'none';
+                const data = {};
+                ['fullName','username','email','phone','password','confirmPassword','address','birthDate'].forEach(k=>data[k]= (form[k] && form[k].value) ? form[k].value.trim() : '');
+                if(!data.username || !data.email || !data.password){ alertError.style.display='flex'; return; }
+                if(data.password !== data.confirmPassword){ alertError.style.display='flex'; return; }
+                try{
+                    const raw = localStorage.getItem('users');
+                    const users = raw ? JSON.parse(raw) : [];
+                    if(users.find(u => u.username === data.username || u.email === data.email)){
+                        alertError.style.display='flex'; return;
+                    }
+                    const user = { id: genId(), username: data.username, email: data.email, password: data.password, name: data.fullName || data.username };
+                    users.push(user);
+                    localStorage.setItem('users', JSON.stringify(users));
+                    alertSuccess.style.display='flex';
+                    setTimeout(()=>{ sessionStorage.setItem('currentUser', JSON.stringify({id:user.id,username:user.username,email:user.email})); window.location.href='dashboard.html'; }, 800);
+                }catch(e){ console.error(e); alertError.style.display='flex'; }
+            });
+        })();
+    </script>
 </div>
 </body>
 </html>

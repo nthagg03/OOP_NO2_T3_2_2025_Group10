@@ -34,7 +34,7 @@
 <main>
     <div class="card">
         <div class="content">
-            <form th:action="@{/products}" method="post" class="grid">
+            <form id="productForm" action="#" method="post" class="grid">
                 <div class="row">
                     <div class="field">
                         <label class="label" for="productName">Tên sản phẩm</label>
@@ -73,11 +73,36 @@
                     </div>
                 </div>
 
-                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
                 <div class="actions">
                     <button class="btn primary" type="submit">Lưu</button>
-                    <a class="btn secondary" th:href="@{/products}">Hủy</a>
+                    <a class="btn secondary" href="productlist.html">Hủy</a>
                 </div>
+            </form>
+            <script>
+                (function(){
+                    const form = document.getElementById('productForm');
+                    function genId(){ return 'p_' + Date.now(); }
+                    form.addEventListener('submit', function(ev){
+                        ev.preventDefault();
+                        const data = {
+                            id: genId(),
+                            productName: (form.productName.value || '').trim(),
+                            category: (form.category.value || '').trim(),
+                            price: Number(form.price.value)||0,
+                            stock: Number(form.stock.value)||0,
+                            description: (form.description.value||'').trim()
+                        };
+                        if(!data.productName) { alert('Tên sản phẩm là bắt buộc'); return; }
+                        try{
+                            const raw = localStorage.getItem('products');
+                            const list = raw ? JSON.parse(raw) : [];
+                            list.push(data);
+                            localStorage.setItem('products', JSON.stringify(list));
+                            window.location.href = 'productlist.html';
+                        }catch(e){ console.error(e); alert('Lỗi lưu sản phẩm'); }
+                    });
+                })();
+            </script>
             </form>
         </div>
     </div>

@@ -20,13 +20,14 @@ public class ProductListController {
 	public String list(Model model) {
 		try {
 			ArrayList<Product> products = pa.listProducts();
-			// Nếu DB trống hoặc lỗi trả về danh sách rỗng, seed 3 sản phẩm mặc định để demo
+			// Nếu DB trống hoặc lỗi trả về danh sách rỗng, seed 4 sản phẩm mặc định để demo
 			if (products == null || products.isEmpty()) {
 				ArrayList<Product> seed = new ArrayList<>();
 				Product p1 = new Product(null, "Cappuchino", 45000, 20, "Cà phê sữa bọt mịn", "Coffee");
 				Product p2 = new Product(null, "Trà Vải Lài", 39000, 30, "Trà lài hương vải tươi mát", "Tea");
-				Product p3 = new Product(null, "Matcha", 42000, 25, "Matcha Nhật Bản thơm béo", "Tea");
-				seed.add(p1); seed.add(p2); seed.add(p3);
+				Product p3 = new Product(null, "Sinh tố dâu", 40000, 18, "Sinh tố dâu tươi mát, béo nhẹ", "Smoothie");
+				Product p4 = new Product(null, "Matcha", 42000, 25, "Matcha Nhật Bản thơm béo", "Tea");
+				seed.add(p1); seed.add(p2); seed.add(p3); seed.add(p4);
 				products = seed;
 			}
 			model.addAttribute("products", products);

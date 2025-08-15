@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<html lang="vi">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -45,13 +45,11 @@
 </head>
 <body>
 <header>
-    <div class="logo">
-        ☕
-    </div>
+    <div class="logo">☕</div>
     <div class="title">Danh mục sản phẩm</div>
     <div style="margin-left:auto">
-        <a class="btn ghost" th:href="@{/}">Trang chủ</a>
-        <a class="btn secondary" th:href="@{/products/new}" style="margin-left:8px">+ Thêm</a>
+        <a class="btn ghost" href="index.html">Trang chủ</a>
+        <a class="btn secondary" href="productlistform.html" style="margin-left:8px">+ Thêm</a>
     </div>
 </header>
 
@@ -63,20 +61,56 @@
             <div></div>
         </div>
         <div class="grid" id="featuredGrid">
-            <article class="card" th:each="p, st : ${products}" th:if="${p.featured} == true and ${st.count} &lt;= 6">
+            <!-- Featured: show 2 highlighted products -->
+            <article class="card">
                 <div class="thumb">
-                    <span class="badge" th:if="${p.isNew}">MỚI</span>
-                    <span class="badge size" th:if="${p.size} == 'L'">SIZE L</span>
-                    <img th:if="${p.imageUrl} != null" th:src="${p.imageUrl}" alt="ảnh sản phẩm" />
-                    <div th:if="${p.imageUrl} == null" style="font-size:42px">☕</div>
+                    <div style="font-size:42px">☕</div>
                 </div>
                 <div class="content">
-                    <h3 class="title-card" th:text="${p.productName}">Tên sản phẩm</h3>
-                    <p class="desc" th:text="${p.description}">Mô tả ngắn gọn về sản phẩm...</p>
+                    <h3 class="title-card">Cappuchino</h3>
+                    <p class="desc">Cà phê sữa bọt mịn — hương thơm đậm, lớp foam mềm mịn.</p>
                     <div class="meta">
-                        <div class="price" th:text="${#numbers.formatDecimal(p.price, 0, 'COMMA', 0, 'POINT')} + ' ₫'">0 ₫</div>
-                        <a class="btn primary" th:href="@{'/products/edit/' + ${p.productId}}">Sửa</a>
-                        <a class="btn secondary" th:href="@{'/products/delete/' + ${p.productId}}" onclick="return confirm('Xóa sản phẩm này?')" style="margin-left:8px">Xóa</a>
+                        <div class="price">45.000 ₫</div>
+                        <a class="btn secondary" href="#" style="margin-left:8px">Mua</a>
+                    </div>
+                </div>
+            </article>
+            <article class="card">
+                <div class="thumb">
+                    <div style="font-size:42px">🍵</div>
+                </div>
+                <div class="content">
+                    <h3 class="title-card">Trà Vải Lài</h3>
+                    <p class="desc">Trà lài hương vải tươi mát — thích hợp cho ngày hè.</p>
+                    <div class="meta">
+                        <div class="price">39.000 ₫</div>
+                        <a class="btn secondary" href="#" style="margin-left:8px">Mua</a>
+                    </div>
+                </div>
+            </article>
+            <article class="card">
+                <div class="thumb">
+                    <div style="font-size:42px">🍓</div>
+                </div>
+                <div class="content">
+                    <h3 class="title-card">Sinh tố dâu</h3>
+                    <p class="desc">Sinh tố dâu tươi mát, béo nhẹ — ngon và bổ dưỡng.</p>
+                    <div class="meta">
+                        <div class="price">40.000 ₫</div>
+                        <a class="btn secondary" href="#" style="margin-left:8px">Mua</a>
+                    </div>
+                </div>
+            </article>
+            <article class="card">
+                <div class="thumb">
+                    <div style="font-size:42px">🍵</div>
+                </div>
+                <div class="content">
+                    <h3 class="title-card">Matcha</h3>
+                    <p class="desc">Matcha Nhật Bản thơm béo — vị đậm, màu xanh tươi.</p>
+                    <div class="meta">
+                        <div class="price">42.000 ₫</div>
+                        <a class="btn secondary" href="#" style="margin-left:8px">Mua</a>
                     </div>
                 </div>
             </article>
@@ -90,27 +124,41 @@
             <div></div>
         </div>
         <div class="grid" id="allProductsGrid">
-            <article class="card" th:each="p, st : ${products}" th:classappend="${st.count} > 9 ? ' extra hidden' : ''">
-                <div class="thumb">
-                    <span class="badge" th:if="${p.isNew}">MỚI</span>
-                    <span class="badge size" th:if="${p.size} == 'L'">SIZE L</span>
-                    <img th:if="${p.imageUrl} != null" th:src="${p.imageUrl}" alt="ảnh sản phẩm" />
-                    <div th:if="${p.imageUrl} == null" style="font-size:42px">☕</div>
-                </div>
+            <!-- repeat all 4 products as static cards -->
+            <article class="card">
+                <div class="thumb"><div style="font-size:42px">☕</div></div>
                 <div class="content">
-                    <h3 class="title-card" th:text="${p.productName}">Tên sản phẩm</h3>
-                    <p class="desc" th:text="${p.description}">Mô tả ngắn gọn về sản phẩm...</p>
-                    <div class="meta">
-                        <div class="price" th:text="${#numbers.formatDecimal(p.price, 0, 'COMMA', 0, 'POINT')} + ' ₫'">0 ₫</div>
-                        <a class="btn primary" th:href="@{'/products/edit/' + ${p.productId}}">Sửa</a>
-                        <a class="btn secondary" th:href="@{'/products/delete/' + ${p.productId}}" onclick="return confirm('Xóa sản phẩm này?')" style="margin-left:8px">Xóa</a>
-                    </div>
+                    <h3 class="title-card">Cappuchino</h3>
+                    <p class="desc">Cà phê sữa bọt mịn — hương thơm đậm, lớp foam mềm mịn.</p>
+                    <div class="meta"><div class="price">45.000 ₫</div></div>
+                </div>
+            </article>
+            <article class="card">
+                <div class="thumb"><div style="font-size:42px">🍵</div></div>
+                <div class="content">
+                    <h3 class="title-card">Trà Vải Lài</h3>
+                    <p class="desc">Trà lài hương vải tươi mát — thích hợp cho ngày hè.</p>
+                    <div class="meta"><div class="price">39.000 ₫</div></div>
+                </div>
+            </article>
+            <article class="card">
+                <div class="thumb"><div style="font-size:42px">🍓</div></div>
+                <div class="content">
+                    <h3 class="title-card">Sinh tố dâu</h3>
+                    <p class="desc">Sinh tố dâu tươi mát, béo nhẹ — ngon và bổ dưỡng.</p>
+                    <div class="meta"><div class="price">40.000 ₫</div></div>
+                </div>
+            </article>
+            <article class="card">
+                <div class="thumb"><div style="font-size:42px">🍵</div></div>
+                <div class="content">
+                    <h3 class="title-card">Matcha</h3>
+                    <p class="desc">Matcha Nhật Bản thơm béo — vị đậm, màu xanh tươi.</p>
+                    <div class="meta"><div class="price">42.000 ₫</div></div>
                 </div>
             </article>
         </div>
-        <div class="more-wrap">
-            <button class="btn-more" id="showMore">Xem thêm</button>
-        </div>
+        <div class="more-wrap"><button class="btn-more" id="showMore">Xem thêm</button></div>
     </section>
 </main>
 
@@ -120,7 +168,7 @@
         const grid = document.getElementById('allProductsGrid');
         if(!btn || !grid) return;
         btn.addEventListener('click', function(){
-            grid.querySelectorAll('.extra.hidden').forEach(el=>el.classList.remove('hidden'));
+            // static page - nothing more to load, just hide the button
             btn.classList.add('hidden');
         });
     })();
