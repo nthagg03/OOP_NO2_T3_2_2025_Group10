@@ -29,7 +29,9 @@
 	<body>
 		<header>
 			<div class="brand"><div class="logo">☕</div><div>Coffee Shop - Quản lý người dùng</div></div>
-			<nav><a class="link" th:href="@{/}">Trang chủ</a> · <a class="link" th:href="@{/logout}">Đăng xuất</a></nav>
+			<nav>
+				<a class="btn ghost" id="backDashboard" th:href="@{/dashboard}" href="dashboard.html">Quay về Dashboard</a>
+			</nav>
 		</header>
 		<main>
 			<div class="toolbar">
@@ -39,7 +41,7 @@
 						<button class="btn" type="submit">Tìm</button>
 					</form>
 				</div>
-					<a class="btn primary" th:href="@{/userlist/add}">+ Thêm người dùng</a>
+					<a id="addUserBtn" class="btn primary" th:href="@{/userlist/add}" href="adduser.html">+ Thêm người dùng</a>
 			</div>
 
 			<div class="card">
@@ -50,27 +52,81 @@
 							<th>Tên</th>
 							<th>Username</th>
 							<th>Email</th>
-							<th>Vai trò</th>
 							<th>Hành động</th>
 						</tr>
 					</thead>
-					<tbody>
-						<tr th:each="u, iStat : ${listOfArray}">
-							<td th:text="${iStat.index + 1}">1</td>
-							<td th:text="${u.name}">Nguyễn Văn A</td>
-							<td th:text="${u.phoneNumber}">0999999999</td>
-							<td th:text="${u.email}">email@gmail.com</td>
-							<td th:text="${u.userType}">Customer</td>
-							<td class="actions">
-								<a class="link" th:href="@{'/userlist/edit/' + ${u.userId}}">Sửa</a>
-								<a class="link" th:href="@{'/userlist/delete/' + ${u.userId}}" onclick="return confirm('Xóa người dùng này?')">Xóa</a>
-							</td>
-						</tr>
-						<tr th:if="${#lists.isEmpty(listOfArray)}"><td colspan="6" style="text-align:center;padding:18px">Chưa có người dùng.</td></tr>
+					<tbody id="usersTbody">
+						<!-- Client-side rendered rows will be injected here from localStorage.users; server-side Thymeleaf will still work when rendered by server -->
+						<tr id="noUsersRow"><td colspan="5" style="text-align:center;padding:18px">Chưa có người dùng.</td></tr>
 					</tbody>
 				</table>
 			</div>
 		</main>
+		<script>
+			(function(){
+				const tbody = document.getElementById('usersTbody');
+				const noRow = document.getElementById('noUsersRow');
+
+				function loadUsers(){
+					try{
+						const raw = localStorage.getItem('users');
+						const users = raw ? JSON.parse(raw) : [];
+						render(users);
+					}catch(e){ console.error('loadUsers', e); render([]); }
+				}
+
+				function render(users){
+					// clear existing client-rendered rows (keep noUsersRow as fallback)
+					Array.from(tbody.querySelectorAll('tr.client-row')).forEach(r => r.remove());
+					if(!users || users.length === 0){ noRow.style.display = 'table-row'; return; }
+					noRow.style.display = 'none';
+					users.forEach(function(u, idx){
+						const tr = document.createElement('tr');
+						tr.className = 'client-row';
+						tr.innerHTML = '<td>' + (idx+1) + '</td>' +
+							'<td>' + escapeHtml(u.name || '') + '</td>' +
+							'<td>' + escapeHtml(u.username || u.phoneNumber || '') + '</td>' +
+							'<td>' + escapeHtml(u.email || '') + '</td>' +
+							'<td class="actions">' +
+								'<a class="link" href="#" data-id="' + (u.id||'') + '" data-action="edit">Sửa</a> ' +
+								'<a class="link" href="#" data-id="' + (u.id||'') + '" data-action="delete">Xóa</a>' +
+							'</td>';
+						tbody.appendChild(tr);
+					});
+				}
+
+				function escapeHtml(s){ return String(s||'').replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;"}[c]; }); }
+
+				// delegate clicks for edit/delete
+				tbody.addEventListener('click', function(ev){
+					const a = ev.target.closest('a[data-action]');
+					if(!a) return;
+					ev.preventDefault();
+					const id = a.getAttribute('data-id');
+					const action = a.getAttribute('data-action');
+					if(action === 'delete'){
+						if(!confirm('Xóa người dùng này?')) return;
+						try{
+							const raw = localStorage.getItem('users');
+							const users = raw ? JSON.parse(raw) : [];
+							const filtered = users.filter(u => (u.id || u.userId || '') !== id);
+							localStorage.setItem('users', JSON.stringify(filtered));
+							loadUsers();
+						}catch(e){ console.error(e); alert('Lỗi khi xóa'); }
+					}else if(action === 'edit'){
+						// no client-side edit form yet; navigate to adduser (could be extended)
+						window.location.href = 'adduser.html';
+					}
+				});
+
+				// load on start
+				loadUsers();
+
+				// wire back to dashboard link if present
+				const back = document.getElementById('backDashboard');
+				if(back){ back.addEventListener('click', function(e){ e.preventDefault(); try{ fetch('/dashboard', {method:'HEAD', cache:'no-store'}).then(function(res){ if(res && (res.status===200||res.status===204)) location.href = '/dashboard'; else location.href = this.getAttribute('href')||'dashboard.html'; }.bind(this)).catch(function(){ location.href = this.getAttribute('href')||'dashboard.html'; }.bind(this)); }catch(err){ location.href = this.getAttribute('href')||'dashboard.html'; } }); }
+			})();
+		</script>
 	</body>
 	</html>
 

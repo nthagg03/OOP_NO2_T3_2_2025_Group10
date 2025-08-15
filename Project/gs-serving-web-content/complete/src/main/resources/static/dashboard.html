@@ -511,7 +511,7 @@
         <div class="card">
             <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px">
                 <h3>Đơn hàng gần đây</h3>
-                <a th:href="@{/orders}" class="mini-link">Xem tất cả</a>
+                <a th:href="@{/orders}" href="orderlist.html" class="mini-link">Xem tất cả</a>
             </div>
             <div class="table-wrap">
                 <table>
@@ -541,7 +541,7 @@
                             </span>
                         </td>
                         <td>
-                            <a th:href="@{'/orders/' + ${o.id}}" class="mini-link" style="padding:6px 10px;font-size:11px">Chi tiết</a>
+                            <td><a th:href="@{'/orders/' + ${o.id}}" href="orderlist.html" class="mini-link">Chi tiết</a></td>
                         </td>
                     </tr>
                     <tr th:if="${#lists.isEmpty(recentOrders)}">
@@ -595,18 +595,75 @@
         </div>
     </div>
 
+    <!-- Orders quick view -->
+    <div style="margin-top:18px">
+        <div class="card">
+            <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px">
+                <h3>Đơn hàng</h3>
+                <a th:href="@{/orders}" href="orderlist.html" class="mini-link">Xem tất cả</a>
+            </div>
+            <div class="table-wrap" style="margin-top:8px">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Mã</th>
+                        <th>Khách hàng</th>
+                        <th>Tổng</th>
+                        <th>Trạng thái</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="o : ${recentOrders}">
+                        <td class="code" th:text="${o.code}">ODR001</td>
+                        <td><strong th:text="${o.customerName}">Khách</strong></td>
+                        <td th:text="${#numbers.formatDecimal(o.totalAmount,1,'COMMA',0,'POINT')} + ' đ'">0 đ</td>
+                        <td>
+                            <span class="status" th:classappend="${o.status=='PAID'} ? ' paid' : (o.status=='PENDING' ? ' pending' : ' cancel')" th:text="${o.status}"></span>
+                        </td>
+                        <td><a th:href="@{'/orders/' + ${o.id}}" href="orderlist.html" class="mini-link">Chi tiết</a></td>
+                    </tr>
+                    <tr th:if="${#lists.isEmpty(recentOrders)}">
+                        <td colspan="5" class="empty">Chưa có đơn hàng.</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
 </main>
 
 <footer>&copy; <span th:text="${#dates.format(#dates.createNow(),'yyyy')}"></span> Coffee Shop – Dashboard</footer>
 <script>
     (function(){
-        // helper: try server route then fallback to href
+        // helper: try server route then fallback to href quickly.
+        // We use a short timeout so clicks remain responsive if HEAD is slow or blocked.
         function navigatePreferServer(path, fallback){
+            // fallback quickly if server doesn't respond within timeout
+            var fallbackTimeout = setTimeout(function(){
+                try{ location.href = fallback; }catch(_){}
+            }, 220);
+
+            // try a HEAD request to prefer the server route
             try{
                 fetch(path, {method:'HEAD', cache:'no-store'})
-                    .then(function(res){ if(res && (res.status===200 || res.status===204)) location.href = path; else location.href = fallback; })
-                    .catch(function(){ location.href = fallback; });
-            }catch(e){ location.href = fallback; }
+                    .then(function(res){
+                        clearTimeout(fallbackTimeout);
+                        if(res && (res.status === 200 || res.status === 204)){
+                            try{ location.href = path; }catch(_){}
+                        }else{
+                            try{ location.href = fallback; }catch(_){}
+                        }
+                    })
+                    .catch(function(){
+                        clearTimeout(fallbackTimeout);
+                        try{ location.href = fallback; }catch(_){}
+                    });
+            }catch(e){
+                clearTimeout(fallbackTimeout);
+                try{ location.href = fallback; }catch(_){}
+            }
         }
 
         const navUsers = document.getElementById('navUsers');

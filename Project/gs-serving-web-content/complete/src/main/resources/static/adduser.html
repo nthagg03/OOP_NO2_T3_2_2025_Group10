@@ -48,13 +48,7 @@
 								<div class="input"><input id="email" name="email" type="email" required /></div>
 							</div>
 							<div class="field">
-								<label class="label" for="role">Vai trò</label>
-								<div class="select">
-									<select id="userType" name="userType">
-										<option th:value="${T(com.example.servingwebcontent.Model.User.UserType).Customer?string('Customer')}">Customer</option>
-										<option th:value="${T(com.example.servingwebcontent.Model.User.UserType).Seller?string('Seller')}">Seller</option>
-									</select>
-								</div>
+								<!-- role removed for static flow -->
 							</div>
 						</div>
 
@@ -96,7 +90,6 @@
 										name: (form.name.value||'').trim(),
 										username: (form.userId && form.userId.value) ? form.userId.value.trim() : '',
 										email: (form.email.value||'').trim(),
-										userType: (form.userType && form.userType.value) ? form.userType.value : 'Customer',
 										phoneNumber: (form.phoneNumber.value||'').trim()
 									};
 									if(!u.name || !u.email){ alert('Tên và email là bắt buộc'); return; }
