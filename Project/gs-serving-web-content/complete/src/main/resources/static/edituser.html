@@ -30,16 +30,16 @@
 		<main>
 			<div class="card">
 				<div class="content">
-					<form th:action="@{'/users/' + ${user.id}}" method="post" class="grid">
-						<input type="hidden" name="_method" value="put" />
+					<form th:action="@{/userlist/edit}" method="post" class="grid">
+						<input type="hidden" th:field="*{userId}" th:value="${user.userId}" />
 						<div class="row">
 							<div class="field">
 								<label class="label" for="fullName">Họ và tên</label>
-								<div class="input"><input id="fullName" name="fullName" type="text" th:value="${user.fullName}" required /></div>
+								<div class="input"><input id="name" name="name" type="text" th:value="${user.name}" required /></div>
 							</div>
 							<div class="field">
 								<label class="label" for="username">Username</label>
-								<div class="input"><input id="username" name="username" type="text" th:value="${user.username}" required /></div>
+								<div class="input"><input id="userId" name="userId" type="text" th:value="${user.userId}" required /></div>
 							</div>
 						</div>
 
@@ -51,9 +51,9 @@
 							<div class="field">
 								<label class="label" for="role">Vai trò</label>
 								<div class="select">
-									<select id="role" name="role" th:value="${user.role}">
-										<option value="USER" th:selected="${user.role}=='USER'">USER</option>
-										<option value="ADMIN" th:selected="${user.role}=='ADMIN'">ADMIN</option>
+									<select id="userType" name="userType">
+										<option th:value="${T(com.example.servingwebcontent.Model.User.UserType).Customer?string('Customer')}" th:selected="${user.userType}=='Customer'">Customer</option>
+										<option th:value="${T(com.example.servingwebcontent.Model.User.UserType).Seller?string('Seller')}" th:selected="${user.userType}=='Seller'">Seller</option>
 									</select>
 								</div>
 							</div>
@@ -62,14 +62,14 @@
 						<div class="row">
 							<div class="field">
 								<label class="label" for="phone">SĐT</label>
-								<div class="input"><input id="phone" name="phone" type="tel" th:value="${user.phone}" /></div>
+								<div class="input"><input id="phoneNumber" name="phoneNumber" type="tel" th:value="${user.phoneNumber}" /></div>
 							</div>
 						</div>
 
 						<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
 						<div class="actions">
 							<button class="btn primary" type="submit">Cập nhật</button>
-							<a class="btn secondary" th:href="@{/users}">Hủy</a>
+							<a class="btn secondary" th:href="@{/userlist}">Hủy</a>
 						</div>
 					</form>
 				</div>

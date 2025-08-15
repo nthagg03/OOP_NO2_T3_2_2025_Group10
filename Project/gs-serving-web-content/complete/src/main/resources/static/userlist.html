@@ -34,12 +34,12 @@
 		<main>
 			<div class="toolbar">
 				<div class="search">
-					<form th:action="@{/users}" method="get" style="display:flex;gap:8px">
+					<form th:action="@{/userlist}" method="get" style="display:flex;gap:8px">
 						<input type="text" name="q" placeholder="Tìm tên/email..." th:value="${param.q}" />
 						<button class="btn" type="submit">Tìm</button>
 					</form>
 				</div>
-				<a class="btn primary" th:href="@{/users/add}">+ Thêm người dùng</a>
+					<a class="btn primary" th:href="@{/userlist/add}">+ Thêm người dùng</a>
 			</div>
 
 			<div class="card">
@@ -55,18 +55,18 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr th:each="u, iStat : ${users}">
+						<tr th:each="u, iStat : ${listOfArray}">
 							<td th:text="${iStat.index + 1}">1</td>
-							<td th:text="${u.fullName}">Nguyễn Văn A</td>
-							<td th:text="${u.username}">username</td>
+							<td th:text="${u.name}">Nguyễn Văn A</td>
+							<td th:text="${u.phoneNumber}">0999999999</td>
 							<td th:text="${u.email}">email@gmail.com</td>
-							<td th:text="${u.role}">USER</td>
+							<td th:text="${u.userType}">Customer</td>
 							<td class="actions">
-								<a class="link" th:href="@{'/users/edit/' + ${u.id}}">Sửa</a>
-								<a class="link" th:href="@{'/users/delete/' + ${u.id}}" onclick="return confirm('Xóa người dùng này?')">Xóa</a>
+								<a class="link" th:href="@{'/userlist/edit/' + ${u.userId}}">Sửa</a>
+								<a class="link" th:href="@{'/userlist/delete/' + ${u.userId}}" onclick="return confirm('Xóa người dùng này?')">Xóa</a>
 							</td>
 						</tr>
-						<tr th:if="${#lists.isEmpty(users)}"><td colspan="6" style="text-align:center;padding:18px">Chưa có người dùng.</td></tr>
+						<tr th:if="${#lists.isEmpty(listOfArray)}"><td colspan="6" style="text-align:center;padding:18px">Chưa có người dùng.</td></tr>
 					</tbody>
 				</table>
 			</div>

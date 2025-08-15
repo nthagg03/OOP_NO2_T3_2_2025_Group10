@@ -101,12 +101,12 @@
       </div>
     </div>
     <nav>
-      <a th:href="@{/}" aria-current="page">Trang chủ</a>
-      <a th:href="@{/productlist}">Sản phẩm</a>
+      <a th:href="@{/}" href="index.html" aria-current="page">Trang chủ</a>
+      <a th:href="@{/products}" href="productlist.html">Sản phẩm</a>
     </nav>
     <div class="nav-actions">
-      <a class="btn-nav btn-login" th:href="@{/login}">Đăng nhập</a>
-      <a class="btn-nav btn-sign" th:href="@{/register}">Đăng ký</a>
+      <a class="btn-nav btn-login" th:href="@{/login}" href="login.html">Đăng nhập</a>
+      <a class="btn-nav btn-sign" th:href="@{/register}" href="register.html">Đăng ký</a>
     </div>
   </div>
 </div>
@@ -119,9 +119,9 @@
     Từ cà phê espresso đậm đà đến trà vải lài thanh mát, chúng tôi mang đến trải nghiệm thưởng thức
     cà phê hoàn hảo cho mọi tín đồ yêu thích hương vị thơm ngon.
   </p>
-  <div class="cta">
-    <a class="btn" th:href="@{/register}">Bắt đầu miễn phí</a>
-    <a class="btn secondary" th:href="@{/products}">Khám phá sản phẩm</a>
+    <div class="cta">
+    <a class="btn" th:href="@{/register}" href="register.html">Bắt đầu miễn phí</a>
+    <a class="btn secondary" th:href="@{/products}" href="productlist.html">Khám phá sản phẩm</a>
   </div>
   <!-- phần .visual đã ẩn để bố cục ra giữa
   <div class="visual"><img class="cup" ... /></div>
