@@ -6,28 +6,41 @@
 
 Dự án **Hệ thống Quản lý Bán Cafe** được phát triển bằng ngôn ngữ Java, là bài tập lớn cho môn học Lập trình Hướng đối tượng (OOP). Ứng dụng cung cấp các chức năng cơ bản để quản lý sản phẩm, đơn hàng, khách hàng và kho hàng thông qua giao diện dòng lệnh (Console-based UI).
 
----
+--- 
 ## 🎯 Giới thiệu
 
 Mục tiêu của dự án là xây dựng một ứng dụng phần mềm hoàn chỉnh, áp dụng các nguyên tắc của lập trình hướng đối tượng (OOP) như tính đóng gói, kế thừa, đa hình và trừu tượng.
 
 Hệ thống được thiết kế để giải quyết các bài toán cơ bản trong việc quản lý bán hàng, bao gồm quản lý sản phẩm, theo dõi đơn hàng, và kiểm soát hàng tồn kho. Với giao diện dòng lệnh (console) đơn giản và thân thiện, ứng dụng phù hợp cho mục đích học tập và có thể dễ dàng mở rộng, phát triển thêm các tính năng nâng cao trong tương lai.
 
----
+--- 
 ## 📖 Mục lục
 
-- [Giới thiệu](#-giới-thiệu)
-- [Thành viên nhóm](#-thành-viên-nhóm)
-- [Phân tích và Thiết kế](#-phân-tích-và-thiết-kế)
-- [Cấu trúc Thư mục](#-cấu-trúc-thư-mục)
-- [Tính năng chính](#-tính-năng-chính)
-- [UML](#-biểu-đồ-lớp-class-diagram)
-- [Giao diện chương trình (Console)](#-giao-diện-chương-trình-console)
-- [Công nghệ sử dụng](#-công-nghệ-sử-dụng)
-- [Tài liệu tham khảo](#-tài-liệu-tham-khảo)
+- [🚀 Hệ thống Quản lý Bán Cafe](#-hệ-thống-quản-lý-bán-cafe)
+  - [🎯 Giới thiệu](#-giới-thiệu)
+  - [📖 Mục lục](#-mục-lục)
+  - [👥 Thành viên nhóm](#-thành-viên-nhóm)
+  - [🏗️ Phân tích và Thiết kế](#️-phân-tích-và-thiết-kế)
+  - [📂 Cấu trúc Thư mục](#-cấu-trúc-thư-mục)
+  - [✨ Tính năng chính](#-tính-năng-chính)
+    - [👤 **Quản lý người dùng:**](#-quản-lý-người-dùng)
+    - [📦 **Quản lý sản phẩm:**](#-quản-lý-sản-phẩm)
+    - [🛒 **Quản lý đơn hàng:**](#-quản-lý-đơn-hàng)
+    - [💳 **Quản lý thanh toán:**](#-quản-lý-thanh-toán)
+    - [💾 **Lưu trữ dữ liệu:**](#-lưu-trữ-dữ-liệu)
+  - [📊 Biểu đồ lớp (Class Diagram)](#-biểu-đồ-lớp-class-diagram)
+  - [🔁 Biểu đồ hoạt động (Activity Diagram)](#-biểu-đồ-hoạt-động-activity-diagram)
+    - [1. Đăng nhập](#1-đăng-nhập)
+    - [2. Mua hàng](#2-mua-hàng)
+    - [3. Bán hàng](#3-bán-hàng)
+    - [4. Thanh toán](#4-thanh-toán)
+    - [5. Tìm kiếm danh sách đơn hàng đã thanh toán của khách hàng cụ thể](#5-tìm-kiếm-danh-sách-đơn-hàng-đã-thanh-toán-của-khách-hàng-cụ-thể)
+  - [🖼️ Giao diện chương trình (Console)](#️-giao-diện-chương-trình-console)
+  - [💡 Công nghệ sử dụng](#-công-nghệ-sử-dụng)
+  - [📚 Tài liệu tham khảo](#-tài-liệu-tham-khảo)
 
 
----
+--- 
 
 ## 👥 Thành viên nhóm
 
@@ -37,7 +50,7 @@ Hệ thống được thiết kế để giải quyết các bài toán cơ bả
 | 2   | Vũ Văn Phương    | 24100373    | [mphw0312](https://github.com/mphw0312)           | Developer      |
 | 3   | TS. Nguyễn Lệ Thu|             | [nglthu](https://github.com/nglthu)               | Giảng viên     |
 
----
+--- 
 
 ## 🏗️ Phân tích và Thiết kế
 
@@ -157,7 +170,7 @@ Dưới đây là cấu trúc các đối tượng chính trong hệ thống:
 
 </details>
 
----
+--- 
 
 ## 📂 Cấu trúc Thư mục
 
@@ -200,7 +213,7 @@ Project/
 README.md                                                                       # Tài liệu mô tả dự án 
 ```
 
----
+--- 
 ## ✨ Tính năng chính
 
 ### 👤 **Quản lý người dùng:**
@@ -236,12 +249,12 @@ README.md                                                                       
 -  **Áp dụng `ArrayList`, `Map`, `HashMap` để quản lý dữ liệu trong bộ nhớ**
 -  **Backup và restore dữ liệu tự động**
 
----
+--- 
 
 ## 📊 Biểu đồ lớp (Class Diagram)
 ![Class Diagram](Project/Image/classdiagram.png)
 
----
+--- 
 
 ## 🔁 Biểu đồ hoạt động (Activity Diagram)
 
@@ -265,11 +278,12 @@ README.md                                                                       
 
 ![Customer Order List Diagram](Project/Image/CustomOrderListDiagram.png)
 
----
+--- 
 
 ## 🖼️ Giao diện chương trình (Console)
 ![Giao diện chương trình(console)](Project/Image/console.png)
----
+
+--- 
 
 ## 💡 Công nghệ sử dụng
 
@@ -281,7 +295,7 @@ README.md                                                                       
 - Lưu trữ: File nhị phân 
 - Cấu trúc dữ liệu: `ArrayList`, `LinkedList`, `Map`,...
 
----
+--- 
 
 ## 📚 Tài liệu tham khảo
 
@@ -289,7 +303,7 @@ README.md                                                                       
 - Java Docs – Oracle
 - Stack Overflow – Community
 
----
+--- 
 
 > © 2025 Nhóm 10    
 > *Hệ thống mua bán cà phê trực tuyến – Mã nguồn mở cho mục đích học tập*

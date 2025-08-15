@@ -1,62 +1,60 @@
-package com.example.servingwebcontent.controller;
+package com.example.servingwebcontent.Controller;
 
-import com.example.servingwebcontent.model.Order;
-import com.example.servingwebcontent.database.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.List;
+import com.example.servingwebcontent.Database.orderAiven;
+import com.example.servingwebcontent.Model.Order;
+import com.example.servingwebcontent.Model.OrderPayment;
+
+import java.util.ArrayList;
 
 @Controller
-@RequestMapping("/orders")
 public class OrderListController {
 
     @Autowired
-    private OrderService orderService;
+    private orderAiven oa;
 
-    // Hiển thị danh sách đơn hàng
-    @GetMapping
-    public String listOrders(Model model) {
-        List<Order> orders = orderService.getAllOrders();
-        model.addAttribute("orders", orders);
+    @GetMapping("/orderlist")
+    public String orderlist(Model model) {
+        try {
+            ArrayList<Order> listOfOrder = oa.orderAivenList();
+            model.addAttribute("listOfOrder", listOfOrder);
+        } catch (Exception e) {
+            model.addAttribute("error", "❌ Không thể tải danh sách đơn hàng: " + e.getMessage());
+        }
         return "orderlist";
     }
 
-    // Hiển thị form thêm mới đơn hàng
-    @GetMapping("/add")
-    public String showAddForm(Model model) {
-        model.addAttribute("order", new Order());
-        return "orderlist";
-    }
+    @GetMapping("/ordersearch")
+    public String orderSearch(@RequestParam(name = "userId", required = false) String userId, Model model) {
+        ArrayList<OrderPayment> orderSearch = new ArrayList<>();
 
-    // Xử lý thêm mới đơn hàng
-    @PostMapping("/add")
-    public String addOrder(@ModelAttribute Order order) {
-        orderService.addOrder(order);
-        return "redirect:/orders";
-    }
+        try {
+            System.out.println("Received userId: " + userId);
+            
+            if (userId != null && !userId.isEmpty()) {
+                // Kiểm tra nếu userId không phải số
+                if (!userId.matches("\\d+")) {
+                    model.addAttribute("error", "⚠️ Vui lòng nhập số nguyên hợp lệ cho User ID.");
+                    model.addAttribute("enteredUserId", userId);
+                    return "ordersearch";
+                }
 
-    // Hiển thị form sửa đơn hàng
-    @GetMapping("/edit/{id}")
-    public String showEditForm(@PathVariable String id, Model model) {
-        Order existingOrder = orderService.getOrderById(id);
-        model.addAttribute("order", existingOrder);
-        return "orderlist";
-    }
+                orderSearch = oa.orderListByUserId(userId);
+            }
 
-    // Xử lý cập nhật đơn hàng
-    @PostMapping("/edit")
-    public String updateOrder(@ModelAttribute Order order) {
-        orderService.updateOrder(order);
-        return "redirect:/orders";
-    }
+            model.addAttribute("orderSearch", orderSearch);
+            model.addAttribute("enteredUserId", userId); // giữ lại giá trị userId đã nhập
 
-    // Xóa đơn hàng
-    @GetMapping("/delete/{id}")
-    public String deleteOrder(@PathVariable String id) {
-        orderService.deleteOrder(id);
-        return "redirect:/orders";
+        } catch (Exception e) {
+            model.addAttribute("error", "❌ Đã xảy ra lỗi khi tìm kiếm đơn hàng: " + e.getMessage());
+            model.addAttribute("enteredUserId", userId); // vẫn giữ lại nếu người dùng nhập sai
+        }
+        
+        return "ordersearch";
     }
 }

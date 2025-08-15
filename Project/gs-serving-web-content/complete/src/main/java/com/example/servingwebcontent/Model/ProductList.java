@@ -1,4 +1,4 @@
-package com.example.servingwebcontent.model;
+package com.example.servingwebcontent.Model;
 
 import java.io.Serializable;
 
