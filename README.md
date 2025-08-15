@@ -196,7 +196,7 @@ Project/
  │   │   └── ...
  │   ├─ initial/
  │   ├─ ...
-Image/                                                                          # File chứa ảnh của dự án
+ ├─ Image/                                                                      # File chứa ảnh của dự án
 README.md                                                                       # Tài liệu mô tả dự án 
 ```
 
@@ -268,7 +268,7 @@ README.md                                                                       
 ---
 
 ## 🖼️ Giao diện chương trình (Console)
-
+![Giao diện chương trình(console)](Project/Image/console.png)
 ---
 
 ## 💡 Công nghệ sử dụng
