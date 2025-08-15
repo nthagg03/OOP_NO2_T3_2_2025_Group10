@@ -87,7 +87,7 @@
         </div>
     </div>
 
-    <form th:action="@{/login}" method="post" autocomplete="on">
+    <form id="loginForm" autocomplete="on">
         <div class="field">
             <label for="username">Tên đăng nhập</label>
             <div class="input-wrap">
@@ -109,10 +109,56 @@
             </label>
             <a href="#" onclick="alert('Liên hệ quản trị để đặt lại mật khẩu');return false;">Quên mật khẩu?</a>
         </div>
-        <button class="btn" type="submit">Đăng nhập</button>
-
-    <!-- server-side alerts removed for static/deploy flow -->
+        <button class="btn" type="button" id="loginBtn">Đăng nhập</button>
     </form>
+
+    <!-- client-side alerts (templates will still render server-side alerts if server provides them) -->
+    <div id="clientAlertError" class="alert error" style="display:none;margin-top:12px"><strong>✖</strong> Sai thông tin đăng nhập. Vui lòng thử lại.</div>
+    <div id="clientAlertLogout" class="alert success" style="display:none;margin-top:12px"><strong>✓</strong> Bạn đã đăng xuất thành công.</div>
+
+    <script>
+        (function(){
+            const form = document.getElementById('loginForm');
+            const loginBtn = document.getElementById('loginBtn');
+            const show = id => { const e = document.getElementById(id); if(e) e.style.display='flex'; };
+            try{
+                const params = new URLSearchParams(window.location.search);
+                if(params.get('error')) show('clientAlertError');
+                if(params.get('logout')) show('clientAlertLogout');
+            }catch(e){/* ignore */}
+
+            loginBtn.addEventListener('click', function(){
+                const emailEl = form.querySelector('[name=email]') || form.querySelector('[name=username]');
+                const email = emailEl ? emailEl.value.trim() : '';
+                const passwordEl = form.querySelector('[name=password]');
+                const password = passwordEl ? passwordEl.value.trim() : '';
+                if(!email || !password){ show('clientAlertError'); return; }
+                try{
+                    const raw = localStorage.getItem('users');
+                    const users = raw ? JSON.parse(raw) : [];
+                    const match = users.find(u => (u.email === email || u.username === email) && u.password === password);
+                    if(match){
+                        sessionStorage.setItem('currentUser', JSON.stringify({id: match.id||null, email: match.email, username: match.username}));
+                        // Prefer server dashboard route if available; otherwise fall back to static dashboard.html
+                        try{
+                            fetch('/dashboard', {method:'HEAD', cache:'no-store'})
+                                .then(function(res){
+                                    if(res && (res.status === 200 || res.status === 204)){
+                                        window.location.href = '/dashboard';
+                                    } else {
+                                        window.location.href = 'dashboard.html';
+                                    }
+                                }).catch(function(){ window.location.href = 'dashboard.html'; });
+                        }catch(e){
+                            window.location.href = 'dashboard.html';
+                        }
+                        return;
+                    }
+                }catch(e){ console.error(e); }
+                show('clientAlertError');
+            });
+        })();
+    </script>
 
     <div class="bottom-note">
         Chưa có tài khoản?
@@ -122,22 +168,6 @@
     <div style="text-align:center;margin-top:8px">
         <a th:href="@{/productlist.html}" style="font-size:12px;color:#7a5f56;text-decoration:none">Xem sản phẩm</a>
     </div>
-    <!-- Client-side alerts (shown only when query params are present) -->
-    <div id="clientAlertError" class="alert error" style="display:none;margin-top:12px"><strong>✖</strong> Sai thông tin đăng nhập. Vui lòng thử lại.</div>
-    <div id="clientAlertLogout" class="alert success" style="display:none;margin-top:12px"><strong>✓</strong> Bạn đã đăng xuất thành công.</div>
-    <script>
-        (function(){
-            try{
-                const params = new URLSearchParams(window.location.search);
-                if(params.get('error')){
-                    const el = document.getElementById('clientAlertError'); if(el) el.style.display = 'flex';
-                }
-                if(params.get('logout')){
-                    const el = document.getElementById('clientAlertLogout'); if(el) el.style.display = 'flex';
-                }
-            }catch(e){ console.error(e); }
-        })();
-    </script>
     
 </div>
 </body>
